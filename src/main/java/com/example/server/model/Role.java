@@ -1,5 +1,6 @@
 package com.example.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,5 +24,6 @@ public class Role extends BaseEntity {
             inverseJoinColumns = { @JoinColumn(name = "user_id") },
             joinColumns = { @JoinColumn(name = "role_id") }
     )
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 }
