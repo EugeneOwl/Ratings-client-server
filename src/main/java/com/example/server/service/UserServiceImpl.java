@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserValid(final UserDto userDto) {
-        return (userDto != null &&
+        return (Objects.nonNull(userDto) &&
                 StringUtils.isNotBlank(userDto.getUsername()) &&
                 StringUtils.isNotBlank(userDto.getPassword())
         );

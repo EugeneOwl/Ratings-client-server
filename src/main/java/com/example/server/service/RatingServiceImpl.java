@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -81,8 +82,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public boolean isRatingValid(final Rating rating) {
-        return (rating.getRecipient() != null &&
-                rating.getSender() != null &&
+        return (Objects.nonNull(rating.getRecipient()) &&
+                Objects.nonNull(rating.getSender()) &&
                 ! rating.getRecipient().equals(rating.getSender()) &&
                 StringUtils.isNotBlank(rating.getValue()));
     }

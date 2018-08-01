@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "server/roles", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,7 +30,7 @@ public class RoleController {
 
     @PutMapping
     public void addRole(@RequestBody final RoleDto roleDto) {
-        if (roleDto == null) {
+        if (Objects.isNull(roleDto)) {
             return;
         }
         this.roleService.addRole(roleDto);
@@ -37,7 +38,7 @@ public class RoleController {
 
     @PostMapping
     public void updateRole(@RequestBody final RoleDto roleDto) {
-        if (roleDto == null) {
+        if (Objects.isNull(roleDto)) {
             return;
         }
         this.roleService.updateRole(roleDto);
@@ -46,7 +47,7 @@ public class RoleController {
     @DeleteMapping("{id}")
     public void removeRole(@PathVariable("id") final int id) {
         final RoleDto roleDto = roleService.getRoleById(id);
-        if (roleDto == null) {
+        if (Objects.isNull(roleDto)) {
             return;
         }
         roleService.removeRole(id);

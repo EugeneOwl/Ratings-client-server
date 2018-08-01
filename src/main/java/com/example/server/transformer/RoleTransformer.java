@@ -4,6 +4,8 @@ import com.example.server.dto.RoleDto;
 import com.example.server.model.Role;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class RoleTransformer implements Transformer<Role, RoleDto> {
     @Override
@@ -18,7 +20,7 @@ public class RoleTransformer implements Transformer<Role, RoleDto> {
 
     @Override
     public Role transform(final RoleDto roleDto) {
-        if (roleDto == null) {
+        if (Objects.isNull(roleDto)) {
             return null;
         }
         final Role rating = Role.builder()

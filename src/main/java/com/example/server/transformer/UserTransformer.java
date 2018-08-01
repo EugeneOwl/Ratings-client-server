@@ -7,13 +7,14 @@ import com.example.server.service.RawDataProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Component
 public class UserTransformer implements Transformer<User, UserDto> {
 
     @Override
     public User transform(final UserDto userDto) {
-        if (userDto == null) {
+        if (Objects.isNull(userDto)) {
             return null;
         }
         final User user = User.builder()
