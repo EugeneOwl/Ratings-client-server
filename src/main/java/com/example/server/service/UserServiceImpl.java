@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     private RawDataProcessor rawDataProcessor;
 
     @Override
-    public UserDto getUserById(int id) {
+    public UserDto getUserById(final int id) {
         if (userRepository.existsById(id)) {
-            User user = userRepository.getOne(id);
+            final User user = userRepository.getOne(id);
             log.info("User was taken by id: " + user);
 
             return userTransformer.transform(user);
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(UserDto userDto) {
         userDto = addRolesFromRawRoles(userDto);
-        User user = userTransformer.transform(userDto);
+        final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was added: " + user);
     }
@@ -54,21 +54,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDto userDto) {
         userDto = addRolesFromRawRoles(userDto);
-        User user = userTransformer.transform(userDto);
+        final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was updated: " + user);
     }
 
     @Override
-    public void removeUser(int id) {
+    public void removeUser(final int id) {
         userRepository.deleteById(id);
         log.info("User with id = {} was removed: ", id);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        List<User> list = userRepository.findAll(Sort.by("id"));
-        for (User user : list) {
+        final List<User> list = userRepository.findAll(Sort.by("id"));
+        for (final User user : list) {
             log.info("User was taken: " + user);
         }
 
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserValid(UserDto userDto) {
+    public boolean isUserValid(final UserDto userDto) {
         return (userDto != null &&
                 StringUtils.isNotBlank(userDto.getUsername()) &&
                 StringUtils.isNotBlank(userDto.getPassword())
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addOrUpdateUserIfValid(UserDto userDto) {
+    public boolean addOrUpdateUserIfValid(final UserDto userDto) {
         if (isUserValid(userDto)) {
             if (userDto.getId() == 0) {
                 addUser(userDto);
@@ -99,10 +99,10 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    private UserDto addRolesFromRawRoles(UserDto userDto) {
-        List<Integer> roleIds = rawDataProcessor.getNumericList(userDto.getRawRoles());
-        List<Role> roles = roleService.getRoleListByIds(roleIds);
-        for (Role role : roles) {
+    private UserDto addRolesFromRawRoles(final UserDto userDto) {
+        final List<Integer> roleIds = rawDataProcessor.getNumericList(userDto.getRawRoles());
+        final List<Role> roles = roleService.getRoleListByIds(roleIds);
+        for (final Role role : roles) {
             userDto.addRole(role);
         }
 

@@ -14,4 +14,8 @@ public interface RoleService {
     List<Role> getRoleListByIds(List<Integer> ids);
 
     void addRole(RoleDto role);
+
+    void updateRole(RoleDto roleDto);
+
+    void removeRole(int id);
 }

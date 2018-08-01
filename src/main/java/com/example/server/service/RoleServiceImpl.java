@@ -25,9 +25,9 @@ public class RoleServiceImpl implements RoleService {
     private RoleTransformer roleTransformer;
 
     @Override
-    public RoleDto getRoleById(int id) {
+    public RoleDto getRoleById(final int id) {
         if (roleRepository.existsById(id)) {
-            Role role = roleRepository.getOne(id);
+            final Role role = roleRepository.getOne(id);
             log.info("Role was taken by id: " + role);
             return roleTransformer.transform(role);
         }
@@ -38,8 +38,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDto> getAllRoles() {
-        List<Role> list = roleRepository.findAll(Sort.by("id"));
-        for (Role role : list) {
+        final List<Role> list = roleRepository.findAll(Sort.by("id"));
+        for (final Role role : list) {
             log.info("Role was taken: " + role);
         }
 
@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getRoleListByIds(List<Integer> ids) {
+    public List<Role> getRoleListByIds(final List<Integer> ids) {
         return ids.stream().map(this::getRoleById)
                 .filter(Objects::nonNull).map(roleTransformer::transform)
                 .sorted(comparing(Role::getId))
@@ -56,9 +56,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void addRole(RoleDto roleDto) {
-        Role role = roleTransformer.transform(roleDto);
+    public void addRole(final RoleDto roleDto) {
+        final Role role = roleTransformer.transform(roleDto);
         roleRepository.save(role);
         log.info("Role was added: " + role);
+    }
+
+    @Override
+    public void updateRole(final RoleDto roleDto) {
+        final Role role = roleTransformer.transform(roleDto);
+        roleRepository.save(role);
+        log.info("Role was updated: " + role);
+    }
+
+    @Override
+    public void removeRole(final int id) {
+        roleRepository.deleteById(id);
+        log.info("Role with id = {} was removed: ", id);
     }
 }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RatingTransformer implements Transformer<Rating, RatingDto> {
     @Override
-    public RatingDto transform(Rating rating) {
-        RatingDto ratingDto =  RatingDto.builder()
+    public RatingDto transform(final Rating rating) {
+        final RatingDto ratingDto =  RatingDto.builder()
                 .value(rating.getValue())
                 .rawRecipient("" + rating.getRecipient().getId())
                 .rawSender("" + rating.getSender().getId())
@@ -21,8 +21,8 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
     }
 
     @Override
-    public Rating transform(RatingDto ratingDto) {
-        Rating rating = Rating.builder()
+    public Rating transform(final RatingDto ratingDto) {
+        final Rating rating = Rating.builder()
                 .value(ratingDto.getValue())
                 .recipient(ratingDto.getRecipient())
                 .sender(ratingDto.getSender())

@@ -38,7 +38,7 @@ public class RawDataProcessorImplTest {
 
     @Test
     public void getNumericList() {
-        List<Integer> expectedNumerics = Arrays.asList(1, 2, 3);
+        final List<Integer> expectedNumerics = Arrays.asList(1, 2, 3);
 
         rawString = "1 2 3";
         Assert.assertEquals(
@@ -67,7 +67,7 @@ public class RawDataProcessorImplTest {
 
     @Test
     public void getNumeric() {
-        int expectedNumeric = 5;
+        final int expectedNumeric = 5;
 
         rawString = "5 ";
         Assert.assertEquals(

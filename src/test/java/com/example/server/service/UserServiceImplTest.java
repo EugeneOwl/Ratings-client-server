@@ -68,11 +68,11 @@ public class UserServiceImplTest {
 
     @Test
     public void getUserById() {
-        User expectedUser = new User();
+        final User expectedUser = new User();
         expectedUser.setUsername("test username");
         expectedUser.setId(1);
 
-        UserDto expectedUserDto = UserDto.builder()
+        final UserDto expectedUserDto = UserDto.builder()
                 .id(expectedUser.getId())
                 .username(expectedUser.getUsername())
                 .build();
@@ -87,7 +87,7 @@ public class UserServiceImplTest {
         when(userRepository.existsById(userDto.getId()))
                 .thenReturn(true);
 
-        UserDto actualUserDto = userService.getUserById(userDto.getId());
+        final UserDto actualUserDto = userService.getUserById(userDto.getId());
 
         assertEquals(expectedUserDto,
                 actualUserDto);
@@ -95,16 +95,16 @@ public class UserServiceImplTest {
 
     @Test
     public void addUser() {
-        Role role = new Role();
+        final Role role = new Role();
         role.setId(2);
         role.setValue("test role value");
 
-        User expectedUser = new User();
+        final User expectedUser = new User();
         expectedUser.setId(1);
         expectedUser.setUsername("test username");
         expectedUser.setRoles(Collections.singleton(role));
 
-        UserDto expectedUserDto = UserDto.builder()
+        final UserDto expectedUserDto = UserDto.builder()
                 .id(expectedUser.getId())
                 .username(expectedUser.getUsername())
                 .roles(new HashSet<>())
@@ -138,11 +138,11 @@ public class UserServiceImplTest {
 
     @Test
     public void getAllUsers() {
-        User expectedUser = new User();
+        final User expectedUser = new User();
         expectedUser.setUsername("test username");
         expectedUser.setId(1);
 
-        UserDto expectedUserDto = UserDto.builder()
+        final UserDto expectedUserDto = UserDto.builder()
                 .id(expectedUser.getId())
                 .username(expectedUser.getUsername())
                 .build();
@@ -153,7 +153,7 @@ public class UserServiceImplTest {
         when(userTransformer.transform(expectedUser))
                 .thenReturn(expectedUserDto);
 
-        List<UserDto> actualUserDtos = userService.getAllUsers();
+        final List<UserDto> actualUserDtos = userService.getAllUsers();
 
         assertEquals(expectedUserDto,
                 actualUserDtos.get(0));

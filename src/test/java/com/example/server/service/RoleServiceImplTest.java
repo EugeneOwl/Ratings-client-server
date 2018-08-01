@@ -1,9 +1,9 @@
 package com.example.server.service;
 
+import com.example.server.dto.RoleDto;
 import com.example.server.model.Role;
 import com.example.server.repository.RoleRepository;
-import org.junit.After;
-import org.junit.Before;
+import com.example.server.transformer.RoleTransformer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +32,19 @@ public class RoleServiceImplTest {
         }
     }
 
-    private Role role;
-
     @Autowired
     private RoleService roleService;
 
     @MockBean
     private RoleRepository roleRepository;
 
-    @Before
-    public void setUp() {
-        role = new Role();
-    }
-
-    @After
-    public void tearDown() {
-        role = null;
-    }
+    @MockBean
+    private RoleTransformer roleTransformer;
+// НЕ ПРОХОДИТ ПОТОМУ ЧТО НЕ ПЕРЕОПРЕДЕЛИЛ ПОВЕДЕНИЕ НОВОГО RoleTransformer
 
     @Test
     public void getRoleById() {
-        Role expectedRole = new Role();
+        final Role expectedRole = new Role();
         expectedRole.setId(1);
         expectedRole.setValue("test value");
 
@@ -62,23 +54,26 @@ public class RoleServiceImplTest {
         when(roleRepository.getOne(expectedRole.getId()))
                 .thenReturn(expectedRole);
 
-        Role actualRole = roleService.getRoleById(expectedRole.getId());
+        final RoleDto actualRoleDto = roleService.getRoleById(expectedRole.getId());
 
-        assertEquals(expectedRole, actualRole);
+        assertEquals(expectedRole.getValue(), actualRoleDto.getValue());
     }
 
     @Test
     public void getAllRoles() {
-        Role expectedRole = new Role();
+        final Role expectedRole = new Role();
         expectedRole.setId(1);
         expectedRole.setValue("test value");
 
         when(roleRepository.findAll((Sort.by("id"))))
                 .thenReturn(Collections.singletonList(expectedRole));
 
-        List<Role> actualRoles = roleService.getAllRoles();
+        final List<RoleDto> actualRoleDtos = roleService.getAllRoles();
 
-        assertEquals(Collections.singletonList(expectedRole), actualRoles);
+        assertEquals(
+                Collections.singletonList(expectedRole).get(0).getValue(),
+                actualRoleDtos.get(0).getValue()
+        );
         verify(roleRepository, times(1)).findAll(Sort.by("id"));
     }
 }

@@ -27,12 +27,12 @@ public class RatingRepositoryTest {
 
     @Test
     public void getRatingsByRecipient() {
-        User recipient = new User();
+        final User recipient = new User();
         recipient.setUsername("test recipient username");
-        User sender = new User();
+        final User sender = new User();
         sender.setUsername("test sender username");
 
-        Rating rating = new Rating();
+        final Rating rating = new Rating();
         rating.setValue("test rating value");
         rating.setRecipient(recipient);
         rating.setSender(sender);
@@ -42,8 +42,8 @@ public class RatingRepositoryTest {
         testEntityManager.persist(rating);
         testEntityManager.flush();
 
-        List<Rating> expectedRatingList = Collections.singletonList(rating);
-        List<Rating> actualRatingList = ratingRepository.getRatingsByRecipient(recipient);
+        final List<Rating> expectedRatingList = Collections.singletonList(rating);
+        final List<Rating> actualRatingList = ratingRepository.getRatingsByRecipient(recipient);
 
         Assert.assertEquals(
                 expectedRatingList.get(0).getValue(),

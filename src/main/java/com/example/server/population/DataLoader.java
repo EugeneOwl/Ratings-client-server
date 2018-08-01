@@ -20,7 +20,7 @@ public class DataLoader implements ApplicationRunner {
     private UserRepository userRepository;
 
     @Autowired
-    public DataLoader(RoleRepository roleRepository, UserRepository userRepository) {
+    public DataLoader(final RoleRepository roleRepository, final UserRepository userRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }

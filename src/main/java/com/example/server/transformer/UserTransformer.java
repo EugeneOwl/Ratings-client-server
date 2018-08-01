@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class UserTransformer implements Transformer<User, UserDto> {
 
     @Override
-    public User transform(UserDto userDto) {
+    public User transform(final UserDto userDto) {
         if (userDto == null) {
             return null;
         }
-        User user = User.builder()
+        final User user = User.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .roles(userDto.getRoles())
@@ -29,7 +29,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
     }
 
     @Override
-    public UserDto transform(User user) {
+    public UserDto transform(final User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -39,9 +39,9 @@ public class UserTransformer implements Transformer<User, UserDto> {
                 .build();
     }
 
-    private String getRawRolesFromRoles(User user) {
-        StringBuilder rawRoles = new StringBuilder();
-        for (Role role : user.getRoles()) {
+    private String getRawRolesFromRoles(final User user) {
+        final StringBuilder rawRoles = new StringBuilder();
+        for (final Role role : user.getRoles()) {
             rawRoles.append(role.getId());
             rawRoles.append(RawDataProcessor.delimiter);
         }

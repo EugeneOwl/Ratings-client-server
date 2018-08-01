@@ -69,11 +69,11 @@ public class RatingServiceImplTest {
 
     @Test
     public void getRatingById() {
-        Rating expectedRating = new Rating();
+        final Rating expectedRating = new Rating();
         rating.setId(1);
         rating.setValue("test rating value");
 
-        RatingDto expectedRatingDto = RatingDto.builder()
+        final RatingDto expectedRatingDto = RatingDto.builder()
                 .id(rating.getId())
                 .value(rating.getValue())
                 .build();
@@ -85,7 +85,7 @@ public class RatingServiceImplTest {
         when(ratingTransformer.transform(expectedRating))
                 .thenReturn(expectedRatingDto);
 
-        RatingDto actualRatingDto = ratingService.getRatingById(expectedRatingDto.getId());
+        final RatingDto actualRatingDto = ratingService.getRatingById(expectedRatingDto.getId());
 
         assertEquals(expectedRatingDto, actualRatingDto);
 
@@ -99,30 +99,30 @@ public class RatingServiceImplTest {
 
     @Test
     public void addRating() {
-        User sender = new User();
+        final User sender = new User();
         sender.setId(2);
         sender.setUsername("test sender username");
 
-        UserDto senderDto = UserDto.builder()
+        final UserDto senderDto = UserDto.builder()
                 .id(sender.getId())
                 .username(sender.getUsername())
                 .build();
 
-        User recipient = new User();
+        final User recipient = new User();
         recipient.setId(3);
         recipient.setUsername("test recipient username");
 
-        UserDto recipientDto = UserDto.builder()
+        final UserDto recipientDto = UserDto.builder()
                 .id(recipient.getId())
                 .username(recipient.getUsername())
                 .build();
 
-        Rating expectedRating = new Rating();
+        final Rating expectedRating = new Rating();
         expectedRating.setValue("test rating value");
         expectedRating.setSender(sender);
         expectedRating.setRecipient(recipient);
 
-        RatingDto expectedRatingDto = RatingDto.builder()
+        final RatingDto expectedRatingDto = RatingDto.builder()
                 .value(expectedRating.getValue())
                 .rawSender("2")
                 .rawRecipient("3")
@@ -159,17 +159,17 @@ public class RatingServiceImplTest {
 
     @Test
     public void getRatingByRecipient() {
-        Rating expectedRating = new Rating();
+        final Rating expectedRating = new Rating();
         expectedRating.setValue("test rating value");
 
-        RatingDto expectedRatingDto = RatingDto.builder()
+        final RatingDto expectedRatingDto = RatingDto.builder()
                 .value(expectedRating.getValue())
                 .build();
 
-        User recipient = new User();
+        final User recipient = new User();
         recipient.setUsername("test recipient name");
 
-        UserDto recipientDto = UserDto.builder()
+        final UserDto recipientDto = UserDto.builder()
                 .username(recipient.getUsername())
                 .build();
 
@@ -180,7 +180,7 @@ public class RatingServiceImplTest {
         when(ratingTransformer.transform(expectedRating))
                 .thenReturn(expectedRatingDto);
 
-        List<RatingDto> actualRatings = ratingService.getRatingsByRecipient(recipientDto);
+        final List<RatingDto> actualRatings = ratingService.getRatingsByRecipient(recipientDto);
 
         assertEquals(Collections.singletonList(expectedRatingDto), actualRatings);
 
@@ -189,7 +189,7 @@ public class RatingServiceImplTest {
 
     @Test
     public void isRatingValid() {
-        User user = new User();
+        final User user = new User();
 
         rating.setValue("test value");
         rating.setRecipient(null);
@@ -208,7 +208,7 @@ public class RatingServiceImplTest {
         rating.setSender(user);
         Assert.assertFalse(ratingService.isRatingValid(rating));
 
-        User otherUser = new User();
+        final User otherUser = new User();
         otherUser.setUsername("Other user");
         rating.setSender(user);
         rating.setRecipient(otherUser);
