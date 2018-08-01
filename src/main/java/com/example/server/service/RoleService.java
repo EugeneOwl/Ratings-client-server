@@ -1,14 +1,17 @@
 package com.example.server.service;
 
+import com.example.server.dto.RoleDto;
 import com.example.server.model.Role;
 
 import java.util.List;
 
 public interface RoleService {
 
-    Role getRoleById(int id);
+    RoleDto getRoleById(int id);
 
-    List<Role> getAllRoles();
+    List<RoleDto> getAllRoles();
 
     List<Role> getRoleListByIds(List<Integer> ids);
+
+    void addRole(RoleDto role);
 }

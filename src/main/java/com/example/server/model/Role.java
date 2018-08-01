@@ -1,6 +1,7 @@
 package com.example.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,9 +12,11 @@ import java.util.Set;
 @Table(name = "roles")
 @Getter
 @Setter
+@Builder
 @ToString(exclude = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role extends BaseEntity {
     @Column(name = "value")
     private String value;
