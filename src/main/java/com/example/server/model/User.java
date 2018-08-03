@@ -37,7 +37,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "sender", orphanRemoval = true)
     private List<Rating> ratingsSender = new ArrayList<>();
 
-    public void addRole(Role role) {
+    public void addRole(final Role role) {
         roles.add(role);
     }
 }

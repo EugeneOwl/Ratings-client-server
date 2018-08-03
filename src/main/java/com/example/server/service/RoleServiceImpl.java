@@ -65,6 +65,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRole(final RoleDto roleDto) {
         final Role role = roleTransformer.transform(roleDto);
+        role.setUsers(roleRepository.getOne(role.getId()).getUsers());
         roleRepository.save(role);
         log.info("Role was updated: " + role);
     }
