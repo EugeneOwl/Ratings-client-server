@@ -33,7 +33,6 @@ public class UserController {
 
             return;
         }
-
         this.userService.addOrUpdateUserIfValid(userDto);
     }
 }

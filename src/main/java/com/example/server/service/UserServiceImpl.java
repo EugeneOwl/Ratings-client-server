@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(UserDto userDto) {
-        userDto = addRolesFromRawRoles(userDto);
+        userDto = updateRolesFromRawRoles(userDto);
         final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was added: " + user);
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDto userDto) {
-        userDto = addRolesFromRawRoles(userDto);
+        userDto = updateRolesFromRawRoles(userDto);
         final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was updated: " + user);
@@ -80,6 +81,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserValid(final UserDto userDto) {
+
         return (Objects.nonNull(userDto) &&
                 StringUtils.isNotBlank(userDto.getUsername()) &&
                 StringUtils.isNotBlank(userDto.getPassword())
@@ -94,15 +96,17 @@ public class UserServiceImpl implements UserService {
             } else {
                 updateUser(userDto);
             }
+
             return true;
         }
 
         return false;
     }
 
-    private UserDto addRolesFromRawRoles(final UserDto userDto) {
+    private UserDto updateRolesFromRawRoles(final UserDto userDto) {
         final List<Integer> roleIds = rawDataProcessor.getNumericList(userDto.getRawRoles());
         final List<Role> roles = roleService.getRoleListByIds(roleIds);
+        userDto.setRoles(new HashSet<>());
         for (final Role role : roles) {
             userDto.addRole(role);
         }
