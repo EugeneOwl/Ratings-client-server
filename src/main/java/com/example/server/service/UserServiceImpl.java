@@ -26,12 +26,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserTransformer userTransformer;
 
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private RawDataProcessor rawDataProcessor;
-
     @Override
     public UserDto getUserById(final int id) {
         if (userRepository.existsById(id)) {
@@ -46,16 +40,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserDto userDto) {
-        userDto = updateRolesFromRawRoles(userDto);
+    public void addUser(final UserDto userDto) {
         final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was added: " + user);
     }
 
     @Override
-    public void updateUser(UserDto userDto) {
-        userDto = updateRolesFromRawRoles(userDto);
+    public void updateUser(final UserDto userDto) {
         final User user = userTransformer.transform(userDto);
         userRepository.save(user);
         log.info("User was updated: " + user);
@@ -101,16 +93,5 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
-    }
-
-    private UserDto updateRolesFromRawRoles(final UserDto userDto) {
-        final List<Integer> roleIds = rawDataProcessor.getNumericList(userDto.getRawRoles());
-        final List<Role> roles = roleService.getRoleListByIds(roleIds);
-        userDto.setRoles(new HashSet<>());
-        for (final Role role : roles) {
-            userDto.addRole(role);
-        }
-
-        return userDto;
     }
 }

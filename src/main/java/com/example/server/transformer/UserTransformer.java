@@ -35,18 +35,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .rawRoles(getRawRolesFromRoles(user))
                 .roles(user.getRoles())
                 .build();
-    }
-
-    private String getRawRolesFromRoles(final User user) {
-        final StringBuilder rawRoles = new StringBuilder();
-        for (final Role role : user.getRoles()) {
-            rawRoles.append(role.getId());
-            rawRoles.append(RawDataProcessor.delimiter);
-        }
-
-        return rawRoles.toString();
     }
 }
