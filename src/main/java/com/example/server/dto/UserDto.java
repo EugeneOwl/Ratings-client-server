@@ -15,9 +15,6 @@ public class UserDto implements Dto {
     private int id;
     private String username;
     private String password;
+    private String mobileNumber;
     private Set<Role> roles = new HashSet<>();
-
-    public void addRole(Role role) {
-        roles.add(role);
-    }
 }

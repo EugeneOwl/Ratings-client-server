@@ -23,6 +23,9 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -36,8 +39,4 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "sender", orphanRemoval = true)
     private List<Rating> ratingsSender = new ArrayList<>();
-
-    public void addRole(final Role role) {
-        roles.add(role);
-    }
 }

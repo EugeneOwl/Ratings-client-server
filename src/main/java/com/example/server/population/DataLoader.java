@@ -16,8 +16,8 @@ import java.util.List;
 
 @Component
 public class DataLoader implements ApplicationRunner {
-    private RoleRepository roleRepository;
-    private UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public DataLoader(final RoleRepository roleRepository, final UserRepository userRepository) {
@@ -25,7 +25,7 @@ public class DataLoader implements ApplicationRunner {
         this.userRepository = userRepository;
     }
 
-    public void run(ApplicationArguments args) {
+    public void run(final ApplicationArguments args) {
         if (roleRepository.findAll().isEmpty()) {
             roleRepository.saveAll(getInitialRoles());
         }
@@ -44,11 +44,11 @@ public class DataLoader implements ApplicationRunner {
 
     private List<User> getInitialUsers() {
         return Arrays.asList(
-                new User("Eugene", "password",
+                new User("Eugene", "password", "+375291234567",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
-                new User("Alex", "pwd123",
+                new User("Alex", "pwd123","375336661234",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
-                new User("Victor", "54321pass",
+                new User("Victor", "54321pass","375177788992",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>())
         );
     }

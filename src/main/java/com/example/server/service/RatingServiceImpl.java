@@ -82,10 +82,10 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public boolean isRatingValid(final Rating rating) {
-        return (Objects.nonNull(rating.getRecipient()) &&
-                Objects.nonNull(rating.getSender()) &&
-                ! rating.getRecipient().equals(rating.getSender()) &&
-                StringUtils.isNotBlank(rating.getValue()));
+        return (Objects.nonNull(rating.getRecipient())
+                && Objects.nonNull(rating.getSender())
+                && ! rating.getRecipient().equals(rating.getSender())
+                && StringUtils.isNotBlank(rating.getValue()));
     }
 
     private UserDto getUserByRawId(final String rawId) {

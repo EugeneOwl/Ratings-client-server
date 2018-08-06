@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.UserDto;
-import com.example.server.model.Role;
 import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
 import com.example.server.transformer.UserTransformer;
@@ -11,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -74,9 +74,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserValid(final UserDto userDto) {
 
-        return (Objects.nonNull(userDto) &&
-                StringUtils.isNotBlank(userDto.getUsername()) &&
-                StringUtils.isNotBlank(userDto.getPassword())
+        return (Objects.nonNull(userDto)
+                && StringUtils.isNotBlank(userDto.getUsername())
+                && StringUtils.isNotBlank(userDto.getPassword())
+                && isMobileNumberCorrect(userDto.getMobileNumber())
         );
     }
 
@@ -93,5 +94,9 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    private boolean isMobileNumberCorrect(final String number) {
+        return Pattern.compile("^((\\+?375)([0-9]{9}))$").matcher(number).matches();
     }
 }

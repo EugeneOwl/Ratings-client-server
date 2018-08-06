@@ -1,9 +1,7 @@
 package com.example.server.transformer;
 
 import com.example.server.dto.UserDto;
-import com.example.server.model.Role;
 import com.example.server.model.User;
-import com.example.server.service.RawDataProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +18,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
         final User user = User.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
+                .mobileNumber(userDto.getMobileNumber())
                 .roles(userDto.getRoles())
                 .build();
         user.setId(userDto.getId());
@@ -35,6 +34,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .mobileNumber(user.getMobileNumber())
                 .roles(user.getRoles())
                 .build();
     }
