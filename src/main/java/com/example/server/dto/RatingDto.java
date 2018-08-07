@@ -10,6 +10,7 @@ import lombok.*;
 public class RatingDto implements Dto {
     private int id;
     private String label;
+    private byte mark;
     private UserDto sender;
     private UserDto recipient;
 }

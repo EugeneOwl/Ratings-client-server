@@ -14,7 +14,7 @@ public interface RatingService {
 
     void removeRating(int id);
 
-    List<RatingDto> getRatingsByRecipient(UserDto recipient);
+    List<RatingDto> getRatingsByRecipient(final int recipientId);
 
     boolean isRatingValid(Rating rating);
 }

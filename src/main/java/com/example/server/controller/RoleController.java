@@ -23,7 +23,7 @@ public class RoleController {
     }
 
     @GetMapping("{id}")
-    public RoleDto getById(@PathVariable("id") final int id) {
+    public RoleDto getRoleById(@PathVariable("id") final int id) {
 
         return roleService.getRoleById(id);
     }

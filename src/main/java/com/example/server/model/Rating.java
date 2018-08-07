@@ -19,6 +19,9 @@ public class Rating extends BaseEntity {
     @Column(name = "label")
     private String label;
 
+    @Column(name = "mark")
+    private byte mark;
+
     @ManyToOne
     private User sender;
 

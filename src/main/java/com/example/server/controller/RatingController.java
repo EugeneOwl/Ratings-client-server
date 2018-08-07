@@ -1,11 +1,14 @@
 package com.example.server.controller;
 
 import com.example.server.dto.RatingDto;
+import com.example.server.dto.UserDto;
 import com.example.server.service.RatingService;
+import com.example.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -15,9 +18,21 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
+    @GetMapping("{id}")
+    public RatingDto getRatingById(@PathVariable("id") final int id) {
+
+        return ratingService.getRatingById(id);
+    }
+
+    @GetMapping("recipient/{recipient_id}")
+    public List<RatingDto> getRatingsByRecipient(@PathVariable("recipient_id") final int recipientId) {
+        System.out.println("DEB target: " + recipientId);
+        return ratingService.getRatingsByRecipient(recipientId);
+    }
+
     @PutMapping
     public void addRating(@RequestBody final RatingDto ratingDto) {
-        System.out.println("ADDING RATING CONTR: " + ratingDto.getLabel());
+
         if (Objects.isNull(ratingDto)) {
 
             return;

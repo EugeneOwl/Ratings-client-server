@@ -14,6 +14,7 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
     public RatingDto transform(final Rating rating) {
         final RatingDto ratingDto =  RatingDto.builder()
                 .label(rating.getLabel())
+                .mark(rating.getMark())
                 .sender(userTransformer.transform(rating.getSender()))
                 .recipient(userTransformer.transform(rating.getRecipient()))
                 .build();
@@ -26,6 +27,7 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
     public Rating transform(final RatingDto ratingDto) {
         final Rating rating = Rating.builder()
                 .label(ratingDto.getLabel())
+                .mark(ratingDto.getMark())
                 .recipient(userTransformer.transform(ratingDto.getRecipient()))
                 .sender(userTransformer.transform(ratingDto.getSender()))
                 .build();

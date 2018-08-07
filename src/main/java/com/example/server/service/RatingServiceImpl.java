@@ -26,6 +26,9 @@ public class RatingServiceImpl implements RatingService {
     private RatingTransformer ratingTransformer;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserTransformer userTransformer;
 
     @Override
@@ -58,8 +61,8 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<RatingDto> getRatingsByRecipient(final UserDto recipientDto) {
-        final User recipient = userTransformer.transform(recipientDto);
+    public List<RatingDto> getRatingsByRecipient(final int recipientId) {
+        final User recipient = userTransformer.transform(userService.getUserById(recipientId));
         final List<Rating> ratings = ratingRepository.getRatingsByRecipient(recipient);
         for (final Rating rating : ratings) {
             log.info("Rating = {} was taken by recipient = {}", rating, recipient);
