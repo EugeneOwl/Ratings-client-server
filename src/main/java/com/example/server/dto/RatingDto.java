@@ -1,6 +1,5 @@
 package com.example.server.dto;
 
-import com.example.server.model.User;
 import lombok.*;
 
 @Getter
@@ -10,9 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class RatingDto implements Dto {
     private int id;
-    private String value;
-    private String rawSender;
-    private String rawRecipient;
-    private User sender;
-    private User recipient;
+    private String label;
+    private UserDto sender;
+    private UserDto recipient;
 }

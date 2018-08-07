@@ -9,5 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class RoleDto implements Dto {
     private int id;
-    private String value;
+    private String label;
 }

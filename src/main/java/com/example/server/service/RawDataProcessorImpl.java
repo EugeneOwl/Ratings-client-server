@@ -23,6 +23,7 @@ public class RawDataProcessorImpl implements RawDataProcessor {
     public int getNumeric(final String rawNumber) {
         final Scanner scanner = new Scanner(cleanNumericString(rawNumber));
         if (scanner.hasNextInt()) {
+
             return scanner.nextInt();
         }
 

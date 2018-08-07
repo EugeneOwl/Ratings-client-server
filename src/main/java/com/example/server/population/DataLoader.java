@@ -44,7 +44,7 @@ public class DataLoader implements ApplicationRunner {
 
     private List<User> getInitialUsers() {
         return Arrays.asList(
-                new User("Eugene", "password", "+375291234567",
+                new User("Eugene", "password", "375291234567",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
                 new User("Alex", "pwd123","375336661234",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),

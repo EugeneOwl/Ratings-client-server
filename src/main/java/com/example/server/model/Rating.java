@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rating extends BaseEntity {
-    @Column(name = "value")
-    private String value;
+    @Column(name = "label")
+    private String label;
 
     @ManyToOne
     private User sender;

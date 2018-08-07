@@ -18,7 +18,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
         final User user = User.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
-                .mobileNumber(userDto.getMobileNumber())
+                .mobileNumber(cleanUpMobileNumber(userDto.getMobileNumber()))
                 .roles(userDto.getRoles())
                 .build();
         user.setId(userDto.getId());
@@ -37,5 +37,9 @@ public class UserTransformer implements Transformer<User, UserDto> {
                 .mobileNumber(user.getMobileNumber())
                 .roles(user.getRoles())
                 .build();
+    }
+
+    private String cleanUpMobileNumber(final String mobileNumber) {
+        return mobileNumber.replaceAll("[^0-9]", "");
     }
 }

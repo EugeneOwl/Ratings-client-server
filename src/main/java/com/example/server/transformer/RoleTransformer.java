@@ -11,7 +11,7 @@ public class RoleTransformer implements Transformer<Role, RoleDto> {
     @Override
     public RoleDto transform(final Role role) {
         final RoleDto roleDto =  RoleDto.builder()
-                .value(role.getValue())
+                .label(role.getLabel())
                 .build();
         roleDto.setId(role.getId());
 
@@ -24,7 +24,7 @@ public class RoleTransformer implements Transformer<Role, RoleDto> {
             return null;
         }
         final Role rating = Role.builder()
-                .value(roleDto.getValue())
+                .label(roleDto.getLabel())
                 .build();
         rating.setId(roleDto.getId());
 

@@ -18,8 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role extends BaseEntity {
-    @Column(name = "value")
-    private String value;
+    @Column(name = "label")
+    private String label;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

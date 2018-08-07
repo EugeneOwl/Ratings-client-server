@@ -31,6 +31,7 @@ public class RoleController {
     @PutMapping
     public void addRole(@RequestBody final RoleDto roleDto) {
         if (Objects.isNull(roleDto)) {
+
             return;
         }
         this.roleService.addRole(roleDto);
@@ -39,6 +40,7 @@ public class RoleController {
     @PostMapping
     public void updateRole(@RequestBody final RoleDto roleDto) {
         if (Objects.isNull(roleDto)) {
+
             return;
         }
         this.roleService.updateRole(roleDto);
@@ -48,6 +50,7 @@ public class RoleController {
     public void removeRole(@PathVariable("id") final int id) {
         final RoleDto roleDto = roleService.getRoleById(id);
         if (Objects.isNull(roleDto)) {
+
             return;
         }
         roleService.removeRole(id);

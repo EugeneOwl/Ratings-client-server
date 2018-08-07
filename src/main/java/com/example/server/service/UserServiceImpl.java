@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -97,6 +96,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isMobileNumberCorrect(final String number) {
-        return Pattern.compile("^((\\+?375)([0-9]{9}))$").matcher(number).matches();
+        return Pattern.compile("^((375)([0-9]{9}))$").matcher(number).matches();
     }
 }

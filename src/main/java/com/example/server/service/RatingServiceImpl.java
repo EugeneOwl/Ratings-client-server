@@ -26,13 +26,7 @@ public class RatingServiceImpl implements RatingService {
     private RatingTransformer ratingTransformer;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UserTransformer userTransformer;
-
-    @Autowired
-    private RawDataProcessor rawDataProcessor;
 
     @Override
     public RatingDto getRatingById(final int id) {
@@ -50,10 +44,6 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public void addRating(final RatingDto ratingDto) {
         final Rating rating = ratingTransformer.transform(ratingDto);
-        final UserDto senderDto = getUserByRawId(ratingDto.getRawSender());
-        final UserDto recipientDto = getUserByRawId(ratingDto.getRawRecipient());
-        rating.setRecipient(userTransformer.transform(recipientDto));
-        rating.setSender(userTransformer.transform(senderDto));
 
         if (isRatingValid(rating)) {
             ratingRepository.save(rating);
@@ -85,12 +75,6 @@ public class RatingServiceImpl implements RatingService {
         return (Objects.nonNull(rating.getRecipient())
                 && Objects.nonNull(rating.getSender())
                 && ! rating.getRecipient().equals(rating.getSender())
-                && StringUtils.isNotBlank(rating.getValue()));
-    }
-
-    private UserDto getUserByRawId(final String rawId) {
-        return userService.getUserById(
-                rawDataProcessor.getNumeric(rawId)
-        );
+                && StringUtils.isNotBlank(rating.getLabel()));
     }
 }

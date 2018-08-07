@@ -2,18 +2,20 @@ package com.example.server.transformer;
 
 import com.example.server.dto.RatingDto;
 import com.example.server.model.Rating;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RatingTransformer implements Transformer<Rating, RatingDto> {
+    @Autowired
+    private UserTransformer userTransformer;
+
     @Override
     public RatingDto transform(final Rating rating) {
         final RatingDto ratingDto =  RatingDto.builder()
-                .value(rating.getValue())
-                .rawRecipient("" + rating.getRecipient().getId())
-                .rawSender("" + rating.getSender().getId())
-                .sender(rating.getSender())
-                .recipient(rating.getRecipient())
+                .label(rating.getLabel())
+                .sender(userTransformer.transform(rating.getSender()))
+                .recipient(userTransformer.transform(rating.getRecipient()))
                 .build();
         ratingDto.setId(rating.getId());
 
@@ -23,9 +25,9 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
     @Override
     public Rating transform(final RatingDto ratingDto) {
         final Rating rating = Rating.builder()
-                .value(ratingDto.getValue())
-                .recipient(ratingDto.getRecipient())
-                .sender(ratingDto.getSender())
+                .label(ratingDto.getLabel())
+                .recipient(userTransformer.transform(ratingDto.getRecipient()))
+                .sender(userTransformer.transform(ratingDto.getSender()))
                 .build();
         rating.setId(ratingDto.getId());
 
