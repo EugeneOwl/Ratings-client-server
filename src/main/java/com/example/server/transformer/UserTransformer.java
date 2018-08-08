@@ -17,7 +17,6 @@ public class UserTransformer implements Transformer<User, UserDto> {
         }
         final User user = User.builder()
                 .username(userDto.getUsername())
-                .password(userDto.getPassword())
                 .mobileNumber(cleanUpMobileNumber(userDto.getMobileNumber()))
                 .roles(userDto.getRoles())
                 .build();
@@ -33,7 +32,6 @@ public class UserTransformer implements Transformer<User, UserDto> {
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
-                .password(user.getPassword())
                 .mobileNumber(user.getMobileNumber())
                 .roles(user.getRoles())
                 .build();

@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserService {
 
         return (Objects.nonNull(userDto)
                 && StringUtils.isNotBlank(userDto.getUsername())
-                && StringUtils.isNotBlank(userDto.getPassword())
                 && isMobileNumberCorrect(userDto.getMobileNumber())
         );
     }
