@@ -25,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleTransformer roleTransformer;
 
     @Override
-    public RoleDto getRoleById(final int id) {
+    public RoleDto getRoleById(final Long id) {
         if (roleRepository.existsById(id)) {
             final Role role = roleRepository.getOne(id);
             log.info("Role was taken by id: " + role);
@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getRoleListByIds(final List<Integer> ids) {
+    public List<Role> getRoleListByIds(final List<Long> ids) {
         return ids.stream().map(this::getRoleById)
                 .filter(Objects::nonNull).map(roleTransformer::transform)
                 .sorted(comparing(Role::getId))
@@ -71,7 +71,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void removeRole(final int id) {
+    public void removeRole(final Long id) {
         roleRepository.deleteById(id);
         log.info("Role with id = {} was removed: ", id);
     }

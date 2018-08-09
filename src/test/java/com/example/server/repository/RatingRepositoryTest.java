@@ -25,30 +25,30 @@ public class RatingRepositoryTest {
     @Autowired
     private RatingRepository ratingRepository;
 
-    @Test
-    public void getRatingsByRecipient() {
-        final User recipient = new User();
-        recipient.setUsername("test recipient username");
-        final User sender = new User();
-        sender.setUsername("test sender username");
-
-        final Rating rating = new Rating();
-        rating.setValue("test rating value");
-        rating.setRecipient(recipient);
-        rating.setSender(sender);
-
-        testEntityManager.persist(sender);
-        testEntityManager.persist(recipient);
-        testEntityManager.persist(rating);
-        testEntityManager.flush();
-
-        final List<Rating> expectedRatingList = Collections.singletonList(rating);
-        final List<Rating> actualRatingList = ratingRepository.getRatingsByRecipient(recipient);
-
-        Assert.assertEquals(
-                expectedRatingList.get(0).getValue(),
-                actualRatingList.get(0).getValue()
-        );
-    }
+//    @Test
+//    public void getRatingsByRecipient() {
+//        final User recipient = new User();
+//        recipient.setUsername("test recipient username");
+//        final User sender = new User();
+//        sender.setUsername("test sender username");
+//
+//        final Rating rating = new Rating();
+//        rating.setValue("test rating value");
+//        rating.setRecipient(recipient);
+//        rating.setSender(sender);
+//
+//        testEntityManager.persist(sender);
+//        testEntityManager.persist(recipient);
+//        testEntityManager.persist(rating);
+//        testEntityManager.flush();
+//
+//        final List<Rating> expectedRatingList = Collections.singletonList(rating);
+//        final List<Rating> actualRatingList = ratingRepository.getRatingsByRecipient(recipient);
+//
+//        Assert.assertEquals(
+//                expectedRatingList.get(0).getValue(),
+//                actualRatingList.get(0).getValue()
+//        );
+//    }
 
 }

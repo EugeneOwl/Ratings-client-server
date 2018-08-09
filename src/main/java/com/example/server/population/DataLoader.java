@@ -7,6 +7,7 @@ import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,11 +19,15 @@ import java.util.List;
 public class DataLoader implements ApplicationRunner {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DataLoader(final RoleRepository roleRepository, final UserRepository userRepository) {
+    public DataLoader(final RoleRepository roleRepository,
+                      final UserRepository userRepository,
+                      final PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void run(final ApplicationArguments args) {
@@ -44,11 +49,11 @@ public class DataLoader implements ApplicationRunner {
 
     private List<User> getInitialUsers() {
         return Arrays.asList(
-                new User("Eugene", "password", "375291234567",
+                new User("Eugene", passwordEncoder.encode("password"), "375291234567",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
-                new User("Alex", "pwd123","375336661234",
+                new User("Alex", passwordEncoder.encode("password"),"375336661234",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
-                new User("Victor", "54321pass","375177788992",
+                new User("Victor", passwordEncoder.encode("password"),"375177788992",
                         new HashSet<>(), new ArrayList<>(), new ArrayList<>())
         );
     }

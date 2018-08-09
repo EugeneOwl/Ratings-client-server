@@ -23,7 +23,7 @@ public class RoleController {
     }
 
     @GetMapping("{id}")
-    public RoleDto getRoleById(@PathVariable("id") final int id) {
+    public RoleDto getRoleById(@PathVariable("id") final Long id) {
 
         return roleService.getRoleById(id);
     }
@@ -47,7 +47,7 @@ public class RoleController {
     }
 
     @DeleteMapping("{id}")
-    public void removeRole(@PathVariable("id") final int id) {
+    public void removeRole(@PathVariable("id") final Long id) {
         final RoleDto roleDto = roleService.getRoleById(id);
         if (Objects.isNull(roleDto)) {
 

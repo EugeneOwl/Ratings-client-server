@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto implements Dto {
-    private int id;
+    private Long id;
     private String username;
     private String mobileNumber;
     private Set<Role> roles = new HashSet<>();

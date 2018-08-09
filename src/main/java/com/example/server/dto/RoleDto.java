@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleDto implements Dto {
-    private int id;
+    private Long id;
     private String label;
 }

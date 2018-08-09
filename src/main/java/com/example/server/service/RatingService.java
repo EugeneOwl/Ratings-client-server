@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface RatingService {
 
-    RatingDto getRatingById(int id);
+    RatingDto getRatingById(Long id);
 
     void addRating(RatingDto ratingDto);
 
-    void removeRating(int id);
+    void removeRating(Long id);
 
-    List<RatingDto> getRatingsByRecipient(final int recipientId);
+    List<RatingDto> getRatingsByRecipient(final Long recipientId);
 
     boolean isRatingValid(Rating rating);
 }

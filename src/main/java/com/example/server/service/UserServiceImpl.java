@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private UserTransformer userTransformer;
 
     @Override
-    public UserDto getUserById(final int id) {
+    public UserDto getUserById(final Long id) {
         if (userRepository.existsById(id)) {
             final User user = userRepository.getOne(id);
             log.info("User was taken by id: " + user);
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(final int id) {
+    public void removeUser(final Long id) {
         userRepository.deleteById(id);
         log.info("User with id = {} was removed: ", id);
     }

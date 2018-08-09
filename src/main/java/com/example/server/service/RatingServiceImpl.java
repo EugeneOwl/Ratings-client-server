@@ -32,7 +32,7 @@ public class RatingServiceImpl implements RatingService {
     private UserTransformer userTransformer;
 
     @Override
-    public RatingDto getRatingById(final int id) {
+    public RatingDto getRatingById(final Long id) {
         if (ratingRepository.existsById(id)) {
             final Rating rating = ratingRepository.getOne(id);
             log.info("Rating was taken by id: " + rating);
@@ -55,13 +55,13 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public void removeRating(final int id) {
+    public void removeRating(final Long id) {
         ratingRepository.deleteById(id);
         log.info("Rating with id = {} was removed: ", id);
     }
 
     @Override
-    public List<RatingDto> getRatingsByRecipient(final int recipientId) {
+    public List<RatingDto> getRatingsByRecipient(final Long recipientId) {
         final User recipient = userTransformer.transform(userService.getUserById(recipientId));
         final List<Rating> ratings = ratingRepository.getRatingsByRecipient(recipient);
         for (final Rating rating : ratings) {

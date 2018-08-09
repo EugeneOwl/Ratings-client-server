@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RatingDto implements Dto {
-    private int id;
+    private Long id;
     private String label;
     private byte mark;
     private UserDto sender;
