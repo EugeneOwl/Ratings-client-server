@@ -12,13 +12,11 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "server/users", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://127.0.0.1:4200")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -30,11 +28,9 @@ public class UserController {
     }
 
     @PostMapping
-    public void updateUser(@RequestBody final UserDto userDto) {
-        if (Objects.isNull(userDto)) {
-
-            return;
-        }
+    public UserDto updateUser(@RequestBody final UserDto userDto) {
         this.userService.addOrUpdateUserIfValid(userDto);
+
+        return userDto;
     }
 }

@@ -5,6 +5,7 @@ import com.example.server.model.Role;
 import com.example.server.repository.RoleRepository;
 import com.example.server.transformer.RoleTransformer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addRole(final RoleDto roleDto) {
+        if (!isRoleValid(roleDto)) {
+
+            return;
+        }
         final Role role = roleTransformer.transform(roleDto);
         roleRepository.save(role);
         log.info("Role was added: " + role);
@@ -64,6 +69,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void updateRole(final RoleDto roleDto) {
+        if (!isRoleValid(roleDto)) {
+
+            return;
+        }
         final Role role = roleTransformer.transform(roleDto);
         role.setUsers(roleRepository.getOne(role.getId()).getUsers());
         roleRepository.save(role);
@@ -72,7 +81,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void removeRole(final Long id) {
+        final RoleDto roleDto = getRoleById(id);
+        if (Objects.isNull(roleDto)) {
+
+            return;
+        }
         roleRepository.deleteById(id);
         log.info("Role with id = {} was removed: ", id);
+    }
+
+    @Override
+    public boolean isRoleValid(final RoleDto roleDto) {
+        return Objects.nonNull(roleDto)
+                && StringUtils.isNotBlank(roleDto.getLabel());
     }
 }

@@ -18,4 +18,6 @@ public interface RoleService {
     void updateRole(RoleDto roleDto);
 
     void removeRole(Long id);
+
+    boolean isRoleValid(RoleDto roleDto);
 }
