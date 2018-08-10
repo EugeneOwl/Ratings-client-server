@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 5/12/17
  */
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/server/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
     @Autowired

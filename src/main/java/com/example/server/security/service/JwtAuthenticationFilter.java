@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     @Override
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
         try {
             // Getting JWT token from request
             String token = Optional.ofNullable(request.getHeader(AuthenticationHelper.AUTHENTICATION_HEADER))
@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Override
     protected void successfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
                                             final FilterChain chain, final Authentication authResult)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
         // Set authentication to context
         SecurityContextHolder.getContext().setAuthentication(authResult);
 
@@ -68,4 +68,15 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
         chain.doFilter(request, response);
     }
+
+//    @Override
+//    protected void unsuccessfulAuthentication(final HttpServletRequest request,
+//                                              final HttpServletResponse response,
+//                                              final AuthenticationException failed)
+//            throws IOException, ServletException {
+//        super.unsuccessfulAuthentication(request, response, failed);
+//        System.out.println("WOOORKS!!!");
+//        throw new JsonException("lalala!", failed);
+//        //response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//    }
 }

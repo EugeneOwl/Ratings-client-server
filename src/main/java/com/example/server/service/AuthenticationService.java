@@ -25,7 +25,6 @@ import java.util.Optional;
  * @since 5/12/17
  */
 @Service
-@Transactional
 public class AuthenticationService {
 
     @Autowired
@@ -37,6 +36,7 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Transactional
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
         try {
             final String username = Optional.ofNullable(loginRequestDto.getUsername())
@@ -49,7 +49,7 @@ public class AuthenticationService {
                     password);
 
             // Try to authenticate with this token
-            final Authentication authResult = this.authenticationManager.authenticate(authRequest);
+            final Authentication authResult = this.authenticationManager.authenticate(authRequest); // In case of bad credentials throws BCException
 
             // Set generated JWT token to response header
             if (authResult.isAuthenticated()) {
@@ -59,6 +59,7 @@ public class AuthenticationService {
                     throw new JsonException("User not exist in system.");
                 }
                 final User user = userRepository.getOne(userDetails.getId());
+
 
                 final String token = this.authenticationHelper.generateToken(userDetails.getId());
 

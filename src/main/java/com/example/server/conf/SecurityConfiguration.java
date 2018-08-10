@@ -4,7 +4,6 @@ import com.example.server.security.handler.RestAccessDeniedHandler;
 import com.example.server.security.handler.RestAuthenticationEntryPoint;
 import com.example.server.security.service.JwtAuthenticationFilter;
 import com.example.server.security.service.JwtAuthenticationProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,13 +28,14 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String[] allowedUrlsForPost = new String[]{ "/auth/login" };
+    private static final String[] allowedUrlsForPost = new String[]{ "/server/auth/login" };
 
-    private final JwtAuthenticationProvider jwtAuthenticationProvider;
-    private final UserDetailsService userDetailsService;
+    @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void configureAuthentication(final AuthenticationManagerBuilder authenticationManagerBuilder)

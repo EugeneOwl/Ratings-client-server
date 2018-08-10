@@ -7,8 +7,8 @@ import com.example.server.security.exception.InvalidTokenAuthenticationException
 import com.example.server.security.model.JwtAuthenticationToken;
 import com.example.server.security.model.JwtUserDetails;
 import com.example.server.security.model.TokenPayload;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -21,14 +21,15 @@ import java.util.Objects;
  * @since 5/12/17
  */
 @Component
-@RequiredArgsConstructor
 @Transactional
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private static final long MILLIS_IN_SECOND = 1000L;
 
-    private final UserRepository userRepository;
-    private final AuthenticationHelper authenticationHelper;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AuthenticationHelper authenticationHelper;
 
     @Override
     public Authentication authenticate(final Authentication authRequest) {
@@ -48,9 +49,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         }
 
         final User user = userRepository.getOne(userEntityId);
-        if (Objects.isNull(user)) {
-            throw new InvalidTokenAuthenticationException("Token does not contain existed user id.");
-        }
 
         // Return authenticated Authentication
         final JwtUserDetails userDetails = new JwtUserDetails(user);
