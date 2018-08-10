@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(final UserDto userDto) {
         final User user = userTransformer.transform(userDto);
+        user.setPassword(userRepository.findByUsername(user.getUsername()).getPassword());
         userRepository.save(user);
         log.info("User was updated: " + user);
     }
