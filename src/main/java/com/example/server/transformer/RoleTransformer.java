@@ -21,6 +21,7 @@ public class RoleTransformer implements Transformer<Role, RoleDto> {
     @Override
     public Role transform(final RoleDto roleDto) {
         if (Objects.isNull(roleDto)) {
+
             return null;
         }
         final Role rating = Role.builder()

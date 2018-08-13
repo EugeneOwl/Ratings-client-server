@@ -57,17 +57,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(final Long id) {
         userRepository.deleteById(id);
-        log.info("User with id = {} was removed: ", id);
+        log.info("User with id = {} was removed.", id);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        final List<User> list = userRepository.findAll(Sort.by("id"));
-        for (final User user : list) {
+        final List<User> users = userRepository.findAll(Sort.by("id"));
+        for (final User user : users) {
             log.info("User was taken: " + user);
         }
 
-        return list.stream()
+        return users.stream()
                 .map(userTransformer::transform)
                 .collect(Collectors.toList());
     }

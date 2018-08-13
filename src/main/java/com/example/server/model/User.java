@@ -39,4 +39,7 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "sender", orphanRemoval = true)
     private List<Rating> ratingsSender = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Task> tasks = new ArrayList<>();
 }

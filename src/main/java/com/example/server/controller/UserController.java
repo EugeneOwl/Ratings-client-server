@@ -3,12 +3,10 @@ package com.example.server.controller;
 import com.example.server.dto.UserDto;
 import com.example.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "server/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -18,6 +16,7 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
+
         return userService.getAllUsers();
     }
 
@@ -29,7 +28,7 @@ public class UserController {
 
     @PostMapping
     public UserDto updateUser(@RequestBody final UserDto userDto) {
-        this.userService.addOrUpdateUserIfValid(userDto);
+        userService.addOrUpdateUserIfValid(userDto);
 
         return userDto;
     }

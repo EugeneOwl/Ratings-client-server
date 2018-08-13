@@ -50,11 +50,11 @@ public class DataLoader implements ApplicationRunner {
     private List<User> getInitialUsers() {
         return Arrays.asList(
                 new User("Eugene", passwordEncoder.encode("password"), "375291234567",
-                        new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
+                        new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
                 new User("Alex", passwordEncoder.encode("password"),"375336661234",
-                        new HashSet<>(), new ArrayList<>(), new ArrayList<>()),
+                        new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
                 new User("Victor", passwordEncoder.encode("password"),"375177788992",
-                        new HashSet<>(), new ArrayList<>(), new ArrayList<>())
+                        new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
         );
     }
 }
