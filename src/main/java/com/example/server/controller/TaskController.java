@@ -26,9 +26,16 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
-    @PostMapping
+    @PutMapping
     public TaskDto addTask(@RequestBody final TaskDto taskDto) {
         taskService.addTask(taskDto);
+
+        return taskDto;
+    }
+
+    @PostMapping
+    public TaskDto updateTask(@RequestBody final TaskDto taskDto) {
+        taskService.updateTask(taskDto);
 
         return taskDto;
     }

@@ -13,4 +13,5 @@ public class TaskDto implements Dto {
     private String description;
     private short evaluation;
     private TaskDto parent;
+    private UserDto user;
 }

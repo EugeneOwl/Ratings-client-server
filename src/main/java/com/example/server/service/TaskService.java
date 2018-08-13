@@ -10,6 +10,8 @@ public interface TaskService {
 
     void addTask(TaskDto taskDto);
 
+    void updateTask(TaskDto taskDto);
+
     List<TaskDto> getAllTasks();
 
     void removeTask(Long id);

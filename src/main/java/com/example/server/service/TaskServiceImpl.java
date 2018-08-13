@@ -42,6 +42,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void updateTask(final TaskDto taskDto) {
+        final Task task = taskTransformer.transform(taskDto);
+        System.out.println("!!!");
+        System.out.println(task.getUser());
+        taskRepository.save(task);
+        log.info("Task was updated: {}", task);
+    }
+
+    @Override
     public List<TaskDto> getAllTasks() {
         final List<Task> tasks = taskRepository.findAll();
         for (final Task task : tasks) {

@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@ToString(callSuper = true, exclude = {"roles", "ratingsRecipient", "ratingsSender"})
+@ToString(callSuper = true, exclude = {"roles", "ratingsRecipient", "ratingsSender", "tasks"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity {

@@ -32,6 +32,7 @@ public class UserTransformer implements Transformer<User, UserDto> {
         user.setId(userDto.getId());
         user.setRatingsRecipient(new ArrayList<>());
         user.setRatingsSender(new ArrayList<>());
+        user.setTasks(new ArrayList<>());
 
         return user;
     }

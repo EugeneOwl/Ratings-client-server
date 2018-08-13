@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(final Long id) {
         if (userRepository.existsById(id)) {
             final User user = userRepository.getOne(id);
+            user.setTasks(user.getTasks().stream().distinct().collect(Collectors.toList()));
             log.info("User was taken by id: " + user);
 
             return userTransformer.transform(user);
