@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.RatingDto;
-import com.example.server.dto.UserDto;
 import com.example.server.model.Rating;
 import com.example.server.model.User;
 import com.example.server.repository.RatingRepository;

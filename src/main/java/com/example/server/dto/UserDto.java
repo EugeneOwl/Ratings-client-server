@@ -1,7 +1,6 @@
 package com.example.server.dto;
 
 import com.example.server.model.Role;
-import com.example.server.model.Task;
 import lombok.*;
 
 import java.util.ArrayList;
