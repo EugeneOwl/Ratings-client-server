@@ -2,7 +2,10 @@ package com.example.server.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

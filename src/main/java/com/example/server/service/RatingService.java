@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.RatingDto;
-import com.example.server.model.Rating;
 
 import java.util.List;
 

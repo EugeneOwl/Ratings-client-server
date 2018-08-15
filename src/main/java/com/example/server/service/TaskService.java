@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.TaskDto;
-import com.example.server.model.Task;
 
 import java.util.List;
 
