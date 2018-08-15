@@ -61,13 +61,9 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<RatingDto> getRatingsByRecipient(final Long recipientId) {
-        final User recipient = userTransformer.transform(userService.getUserById(recipientId));
-        final List<Rating> ratings = ratingRepository.getRatingsByRecipient(recipient);
-        for (final Rating rating : ratings) {
-            log.info("Rating = {} was taken by recipient = {}", rating, recipient);
-        }
-
+        final List<Rating> ratings = ratingRepository.getRatingsByRecipientId(recipientId);
         return ratings.stream()
+                .peek(rating -> log.info("Rating = {} was taken by recipient = {}", rating, rating.getRecipient()))
                 .map(ratingTransformer::transform)
                 .collect(Collectors.toList());
     }

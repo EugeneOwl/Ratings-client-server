@@ -1,6 +1,5 @@
 package com.example.server.dto;
 
-import com.example.server.model.Role;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,6 +16,6 @@ public class UserDto implements Dto {
     private Long id;
     private String username;
     private String mobileNumber;
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleDto> roles = new HashSet<>();
     private List<TaskDto> tasks = new ArrayList<>();
 }

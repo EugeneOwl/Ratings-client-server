@@ -68,15 +68,4 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
         chain.doFilter(request, response);
     }
-
-//    @Override
-//    protected void unsuccessfulAuthentication(final HttpServletRequest request,
-//                                              final HttpServletResponse response,
-//                                              final AuthenticationException failed)
-//            throws IOException, ServletException {
-//        super.unsuccessfulAuthentication(request, response, failed);
-//        System.out.println("WOOORKS!!!");
-//        throw new JsonException("lalala!", failed);
-//        //response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//    }
 }

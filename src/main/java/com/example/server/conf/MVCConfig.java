@@ -20,7 +20,7 @@ public class MVCConfig {
     }
 
     @Bean
-    JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager() {
         return new JpaTransactionManager();
     }
 }

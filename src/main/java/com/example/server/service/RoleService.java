@@ -11,13 +11,11 @@ public interface RoleService {
 
     List<RoleDto> getAllRoles();
 
-    List<Role> getRoleListByIds(List<Long> ids);
-
     void addRole(RoleDto role);
 
     void updateRole(RoleDto roleDto);
 
     void removeRole(Long id);
 
-    boolean isRoleValid(RoleDto roleDto);
+    List<Role> getRoleListByIds(List<Long> ids);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,14 +28,14 @@ public class TaskController {
     }
 
     @PutMapping
-    public TaskDto addTask(@RequestBody final TaskDto taskDto) {
+    public TaskDto addTask(@Valid @RequestBody final TaskDto taskDto) {
         taskService.addTask(taskDto);
 
         return taskDto;
     }
 
     @PostMapping
-    public TaskDto updateTask(@RequestBody final TaskDto taskDto) {
+    public TaskDto updateTask(@Valid @RequestBody final TaskDto taskDto) {
         taskService.updateTask(taskDto);
 
         return taskDto;

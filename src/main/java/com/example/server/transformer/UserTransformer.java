@@ -5,8 +5,6 @@ import com.example.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -15,26 +13,13 @@ public class UserTransformer implements Transformer<User, UserDto> {
     @Autowired
     private TaskTransformer taskTransformer;
 
+    @Autowired
+    private RoleTransformer roleTransformer;
+
     @Override
     public User transform(final UserDto userDto) {
-        if (Objects.isNull(userDto)) {
 
-            return null;
-        }
-        final User user = User.builder()
-                .username(userDto.getUsername())
-                .mobileNumber(cleanUpMobileNumber(userDto.getMobileNumber()))
-                .roles(userDto.getRoles())
-                .tasks(userDto.getTasks().stream()
-                        .map(taskTransformer::transform)
-                        .collect(Collectors.toList()))
-                .build();
-        user.setId(userDto.getId());
-        user.setRatingsRecipient(new ArrayList<>());
-        user.setRatingsSender(new ArrayList<>());
-        user.setTasks(new ArrayList<>());
-
-        return user;
+        return null;
     }
 
     @Override
@@ -44,14 +29,11 @@ public class UserTransformer implements Transformer<User, UserDto> {
                 .id(user.getId())
                 .username(user.getUsername())
                 .mobileNumber(user.getMobileNumber())
-                .roles(user.getRoles())
+                .roles(user.getRoles().stream().map(roleTransformer::transform)
+                        .collect(Collectors.toSet()))
                 .tasks(user.getTasks().stream()
                         .map(taskTransformer::transform)
                         .collect(Collectors.toList()))
                 .build();
-    }
-
-    private String cleanUpMobileNumber(final String mobileNumber) {
-        return mobileNumber.replaceAll("[^0-9]", "");
     }
 }

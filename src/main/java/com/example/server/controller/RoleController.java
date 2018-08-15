@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,14 +28,14 @@ public class RoleController {
     }
 
     @PutMapping
-    public RoleDto addRole(@RequestBody final RoleDto roleDto) {
+    public RoleDto addRole(@Valid @RequestBody final RoleDto roleDto) {
         this.roleService.addRole(roleDto);
 
         return roleDto;
     }
 
     @PostMapping
-    public RoleDto updateRole(@RequestBody final RoleDto roleDto) {
+    public RoleDto updateRole(@Valid @RequestBody final RoleDto roleDto) {
         this.roleService.updateRole(roleDto);
 
         return roleDto;

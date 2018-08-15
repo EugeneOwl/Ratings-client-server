@@ -26,6 +26,7 @@ public class User extends BaseEntity {
     @Column(name = "mobile_number")
     private String mobileNumber;
 
+    @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -34,12 +35,20 @@ public class User extends BaseEntity {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "recipient", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Rating> ratingsRecipient = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "sender", orphanRemoval = true)
     private List<Rating> ratingsSender = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Task> tasks = new ArrayList<>();
+
+    public void update(final User changes) {
+        mobileNumber = changes.getMobileNumber();
+        roles = changes.getRoles();
+    }
 }

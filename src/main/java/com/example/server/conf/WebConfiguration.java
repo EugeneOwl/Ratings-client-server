@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author ikatlinsky
  * @since 5/13/17
  */
-//@Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final int MAX_AGE = 3600;

@@ -28,7 +28,6 @@ public class TaskTransformer implements Transformer<Task, TaskDto> {
                 .user(userTransformer.transform(taskDto.getUser()))
                 .build();
         task.setId(taskDto.getId());
-        task.setSubTasks(new ArrayList<>());
 
         return task;
     }

@@ -27,6 +27,7 @@ public class Task extends BaseEntity {
     @ManyToOne
     private User user;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Task> subTasks = new ArrayList<>();
 
