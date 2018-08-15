@@ -16,6 +16,4 @@ public interface TaskService {
     List<TaskDto> getAllTasks();
 
     void removeTask(Long id);
-
-    List<Task> getTaskListByIds(List<Long> ids);
 }

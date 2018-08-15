@@ -31,16 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(final Long id) {
-        if (userRepository.existsById(id)) {
-            final User user = userRepository.getOne(id);
-            user.setTasks(user.getTasks().stream().distinct().collect(Collectors.toList()));
-            log.info("User was taken by id: " + user);
+        final User user = Optional.of(userRepository.getOne(id))
+                .orElseThrow(EntityNotFoundException::new);
+        log.info("User was taken by id: " + user);
 
-            return userTransformer.transform(user);
-        }
-        log.info("Attempt to take not existing user with id = {}", id);
-
-        return null;
+        return userTransformer.transform(user);
     }
 
     @Override
@@ -61,5 +56,11 @@ public class UserServiceImpl implements UserService {
                 .peek(u -> log.info("User was taken: " + u))
                 .map(userTransformer::transform)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String cleanUpMobileNumber(final String mobileNumber) {
+
+        return mobileNumber.replaceAll(NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN, "");
     }
 }

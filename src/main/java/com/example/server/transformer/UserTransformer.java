@@ -2,9 +2,12 @@ package com.example.server.transformer;
 
 import com.example.server.dto.UserDto;
 import com.example.server.model.User;
+import com.example.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -16,10 +19,23 @@ public class UserTransformer implements Transformer<User, UserDto> {
     @Autowired
     private RoleTransformer roleTransformer;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public User transform(final UserDto userDto) {
+        final User user = User.builder()
+                .username(userDto.getUsername())
+                .mobileNumber(userService.cleanUpMobileNumber(userDto.getMobileNumber()))
+                .roles(userDto.getRoles().stream().map(roleTransformer::transform)
+                        .collect(Collectors.toSet()))
+                .tasks(userDto.getTasks().stream()
+                        .map(taskTransformer::transform)
+                        .collect(Collectors.toList()))
+                .build();
+        user.setId(userDto.getId());
 
-        return null;
+        return user;
     }
 
     @Override

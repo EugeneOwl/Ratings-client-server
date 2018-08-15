@@ -12,6 +12,6 @@ import javax.validation.constraints.NotBlank;
 public class RoleDto implements Dto {
     private Long id;
 
-    @NotBlank(message = "Role should have it's label.")
+    @NotBlank(message = "Label can not be blank.")
     private String label;
 }

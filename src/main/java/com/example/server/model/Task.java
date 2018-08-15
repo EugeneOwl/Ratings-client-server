@@ -33,4 +33,12 @@ public class Task extends BaseEntity {
 
     @ManyToOne
     private Task parent;
+
+    public void update(final Task changes) {
+        this.label = changes.getLabel();
+        this.description = changes.getDescription();
+        this.evaluation = changes.getEvaluation();
+        this.user = changes.getUser();
+        this.parent = changes.getParent();
+    }
 }
