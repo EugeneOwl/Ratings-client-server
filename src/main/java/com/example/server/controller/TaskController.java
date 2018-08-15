@@ -27,14 +27,14 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
-    @PutMapping
+    @PostMapping
     public TaskDto addTask(@Valid @RequestBody final TaskDto taskDto) {
         taskService.addTask(taskDto);
 
         return taskDto;
     }
 
-    @PostMapping
+    @PutMapping
     public TaskDto updateTask(@Valid @RequestBody final TaskDto taskDto) {
         taskService.updateTask(taskDto);
 

@@ -27,7 +27,7 @@ public class RatingController {
         return ratingService.getRatingsByRecipient(recipientId);
     }
 
-    @PutMapping
+    @PostMapping
     public RatingDto addRating(@Valid @RequestBody final RatingDto ratingDto) {
         this.ratingService.addRating(ratingDto);
 

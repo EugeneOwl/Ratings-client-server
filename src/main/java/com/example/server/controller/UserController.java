@@ -28,7 +28,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping
+    @PutMapping
     public UserUpdateDto updateUser(@Valid @RequestBody final UserUpdateDto userUpdateDto) {
         userService.updateUser(userUpdateDto);
 

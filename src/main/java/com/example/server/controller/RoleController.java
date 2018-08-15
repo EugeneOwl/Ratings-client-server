@@ -27,14 +27,14 @@ public class RoleController {
         return roleService.getRoleById(id);
     }
 
-    @PutMapping
+    @PostMapping
     public RoleDto addRole(@Valid @RequestBody final RoleDto roleDto) {
         this.roleService.addRole(roleDto);
 
         return roleDto;
     }
 
-    @PostMapping
+    @PutMapping
     public RoleDto updateRole(@Valid @RequestBody final RoleDto roleDto) {
         this.roleService.updateRole(roleDto);
 
