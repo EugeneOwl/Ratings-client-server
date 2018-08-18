@@ -2,7 +2,6 @@ package com.example.server.controller;
 
 import com.example.server.dto.UserDto;
 import com.example.server.dto.UserUpdateDto;
-import com.example.server.model.User;
 import com.example.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,12 +30,12 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public Page<UserDto> getPage(
+    public Page<UserDto> getPageOfUsers(
             @RequestParam(value = "pageNumber", defaultValue = "0") final int pageNumber,
             @RequestParam(value = "sortByColumn", defaultValue = "id") final String sortByColumn,
             @RequestParam(value = "filterPattern", defaultValue = "") final String filterPattern
     ) {
-        return userService.getPage(pageNumber, sortByColumn, filterPattern);
+        return userService.getPageOfUsers(pageNumber, sortByColumn, filterPattern);
     }
 
     @PutMapping

@@ -7,7 +7,6 @@ import com.example.server.repository.UserRepository;
 import com.example.server.transformer.UserTransformer;
 import com.example.server.transformer.UserUpdateTransformer;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserUpdateTransformer userUpdateTransformer;
+
+    @Autowired
+    private StringParser stringParser;
 
     @Override
     public UserDto getUserById(final Long id) {
@@ -68,22 +70,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> getPage(final int page,
-                                 final String sortByColumn,
-                                 final String filterPattern) {
+    public Page<UserDto> getPageOfUsers(final int page,
+                                        final String sortByColumn,
+                                        final String filterPattern) {
 
-        return userRepository.findByIdOrUsername(getLongFromPattern(filterPattern),
+        return userRepository.findByIdOrUsername(
+                stringParser.getLongFromPattern(filterPattern),
                 filterPattern.toLowerCase(),
                 new PageRequest(page,
-                        COUNT_PER_PAGE,
+                        USER_COUNT_PER_PAGE,
                         Sort.Direction.ASC,
-                        sortByColumn)).map(userTransformer::transform);
-    }
-
-    private Long getLongFromPattern(final String pattern) {
-        final String cleanNumericPattern = pattern.replaceAll("[^\\d]", "");
-
-        return StringUtils.isNotBlank(cleanNumericPattern) ?
-                Long.parseLong(cleanNumericPattern) : 0L;
+                        sortByColumn)
+        ).map(userTransformer::transform);
     }
 }

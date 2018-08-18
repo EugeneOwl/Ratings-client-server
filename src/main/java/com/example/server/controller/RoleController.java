@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.dto.RoleDto;
 import com.example.server.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,15 @@ public class RoleController {
     public RoleDto getRoleById(@PathVariable("id") final Long id) {
 
         return roleService.getRoleById(id);
+    }
+
+    @GetMapping("/page")
+    public Page<RoleDto> getPageOfRoles(
+            @RequestParam(value = "pageNumber", defaultValue = "0") final int pageNumber,
+            @RequestParam(value = "sortByColumn", defaultValue = "id") final String sortByColumn,
+            @RequestParam(value = "filterPattern", defaultValue = "") final String filterPattern
+    ) {
+        return roleService.getPageOfRoles(pageNumber, sortByColumn, filterPattern);
     }
 
     @PostMapping

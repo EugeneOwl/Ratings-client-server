@@ -6,6 +6,9 @@ import com.example.server.repository.TaskRepository;
 import com.example.server.transformer.TaskTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -23,6 +26,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskTransformer taskTransformer;
+
+    @Autowired
+    private StringParser stringParser;
 
     @Override
     public TaskDto getTaskById(final Long id) {
@@ -64,5 +70,20 @@ public class TaskServiceImpl implements TaskService {
     public void removeTask(final Long id) {
         taskRepository.deleteById(id);
         log.info("Task with id = {} was removed.", id);
+    }
+
+    @Override
+    public Page<TaskDto> getPageOfTasks(final int page,
+                                        final String sortByColumn,
+                                        final String filterPattern) {
+
+        return taskRepository.findByIdOrLabel(
+                stringParser.getLongFromPattern(filterPattern),
+                filterPattern.toLowerCase(),
+                new PageRequest(page,
+                        TASK_COUNT_PER_PAGE,
+                        Sort.Direction.ASC,
+                        sortByColumn)
+        ).map(taskTransformer::transform);
     }
 }

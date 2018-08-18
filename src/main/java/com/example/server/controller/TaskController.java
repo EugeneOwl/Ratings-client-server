@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.dto.TaskDto;
 import com.example.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,15 @@ public class TaskController {
     public TaskDto getTaskById(@PathVariable("id") final Long id) {
 
         return taskService.getTaskById(id);
+    }
+
+    @GetMapping("/page")
+    public Page<TaskDto> getPageOfUsers(
+            @RequestParam(value = "pageNumber", defaultValue = "0") final int pageNumber,
+            @RequestParam(value = "sortByColumn", defaultValue = "id") final String sortByColumn,
+            @RequestParam(value = "filterPattern", defaultValue = "") final String filterPattern
+    ) {
+        return taskService.getPageOfTasks(pageNumber, sortByColumn, filterPattern);
     }
 
     @PostMapping

@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     String MOBILE_NUMBER_PATTERN = "^((375)([0-9]{9}))$";
     String NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN = "[^0-9]";
-    int COUNT_PER_PAGE = 5;
+    int USER_COUNT_PER_PAGE = 5;
 
     /**
      * @param id user id
@@ -30,7 +30,7 @@ public interface UserService {
 
     String cleanUpMobileNumber(final String mobileNumber);
 
-    Page<UserDto> getPage(int page,
-                          String sortByColumn,
-                          String filterPattern);
+    Page<UserDto> getPageOfUsers(int page,
+                                 String sortByColumn,
+                                 String filterPattern);
 }

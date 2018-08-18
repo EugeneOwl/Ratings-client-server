@@ -6,6 +6,8 @@ import com.example.server.repository.RoleRepository;
 import com.example.server.transformer.RoleTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleTransformer roleTransformer;
+
+    @Autowired
+    private StringParser stringParser;
 
     @Override
     public RoleDto getRoleById(final Long id) {
@@ -73,5 +78,20 @@ public class RoleServiceImpl implements RoleService {
                 .filter(Objects::nonNull).map(roleTransformer::transform)
                 .sorted(comparing(Role::getId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<RoleDto> getPageOfRoles(final int page,
+                                        final String sortByColumn,
+                                        final String filterPattern) {
+
+        return roleRepository.findByIdOrLabel(
+                stringParser.getLongFromPattern(filterPattern),
+                filterPattern.toLowerCase(),
+                new PageRequest(page,
+                        ROLE_COUNT_PER_PAGE,
+                        Sort.Direction.ASC,
+                        sortByColumn)
+        ).map(roleTransformer::transform);
     }
 }
