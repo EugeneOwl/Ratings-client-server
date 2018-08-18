@@ -7,7 +7,10 @@ import com.example.server.repository.UserRepository;
 import com.example.server.transformer.UserTransformer;
 import com.example.server.transformer.UserUpdateTransformer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +65,25 @@ public class UserServiceImpl implements UserService {
     public String cleanUpMobileNumber(final String mobileNumber) {
 
         return mobileNumber.replaceAll(NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN, "");
+    }
+
+    @Override
+    public Page<UserDto> getPage(final int page,
+                                 final String sortByColumn,
+                                 final String filterPattern) {
+
+        return userRepository.findByIdOrUsername(getLongFromPattern(filterPattern),
+                filterPattern.toLowerCase(),
+                new PageRequest(page,
+                        COUNT_PER_PAGE,
+                        Sort.Direction.ASC,
+                        sortByColumn)).map(userTransformer::transform);
+    }
+
+    private Long getLongFromPattern(final String pattern) {
+        final String cleanNumericPattern = pattern.replaceAll("[^\\d]", "");
+
+        return StringUtils.isNotBlank(cleanNumericPattern) ?
+                Long.parseLong(cleanNumericPattern) : 0L;
     }
 }

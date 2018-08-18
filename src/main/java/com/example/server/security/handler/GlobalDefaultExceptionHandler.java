@@ -2,6 +2,7 @@ package com.example.server.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -48,6 +49,16 @@ class GlobalDefaultExceptionHandler {
     ) {
         writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PropertyReferenceException.class)
+    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+    public ResponseEntity<Object> handleEmptyResultDataAccess(
+            final HttpServletRequest req,
+            final PropertyReferenceException e
+    ) {
+        writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
     }
 
     private void writeDefaultErrorLogMessage(final StringBuffer url, final String errorMessage) {

@@ -27,18 +27,18 @@ public class AuthenticationHelper {
     public static final String AUTHENTICATION_PARAM = "auth";
     private final String SECRET = "ChangeMeToSomethingElse";
 
-    private Long tokenExpirationTime = 3600L;
+    private final Long tokenExpirationTime = 3600L;
 
     private final ObjectMapper objectMapper;
 
     public String generateToken(final Long userId) {
         try {
-            TokenPayload payload = new TokenPayload(
+            final TokenPayload payload = new TokenPayload(
                     userId,
                     Instant.now().getEpochSecond() + this.tokenExpirationTime
             );
 
-            String token = this.objectMapper.writeValueAsString(payload);
+            final String token = this.objectMapper.writeValueAsString(payload);
             return JwtHelper.encode(token, new MacSigner(SECRET)).getEncoded();
         } catch (final JsonProcessingException exception) {
             throw new InternalAuthenticationServiceException("Error generating token.", exception);
