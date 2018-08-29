@@ -1,5 +1,6 @@
 package com.example.server.security.handler;
 
+import com.example.server.security.exception.ForbiddenOperationException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -94,6 +95,17 @@ class GlobalDefaultExceptionHandler {
     ) {
         writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    // When try to update/remove permanent role
+    @ExceptionHandler(ForbiddenOperationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<Object> handleSQLGrammar(
+            final HttpServletRequest req,
+            final ForbiddenOperationException e
+    ) {
+        writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     private void writeDefaultErrorLogMessage(final StringBuffer url, final String errorMessage) {

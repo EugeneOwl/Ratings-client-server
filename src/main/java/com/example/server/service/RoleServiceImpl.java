@@ -4,18 +4,17 @@ import com.example.server.dto.RoleDto;
 import com.example.server.model.PermanentRoles;
 import com.example.server.model.Role;
 import com.example.server.repository.RoleRepository;
-import com.example.server.security.exception.PermanentRoleChangingException;
+import com.example.server.security.exception.ForbiddenOperationException;
 import com.example.server.transformer.RoleTransformer;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,8 +65,11 @@ public class RoleServiceImpl implements RoleService {
         final Role role = Optional.of(roleRepository.getOne(roleDto.getId()))
                 .orElseThrow(EntityNotFoundException::new);
         if (isRolePermanent(role.getLabel())) {
-            //throw new PermanentRoleChangingException("TRY TO CHANGE PERMANENT ROLE.");
+            throw new ForbiddenOperationException(
+                    "Attempt to change permanent role: " + role.getLabel()
+            );
         }
+
         role.setLabel(roleDto.getLabel());
         roleRepository.save(role);
         log.info("Role was updated: " + role);
@@ -75,6 +77,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void removeRole(final Long id) {
+        final Role role = Optional.of(roleRepository.getOne(id))
+                .orElseThrow(EntityNotFoundException::new);
+        if (isRolePermanent(role.getLabel())) {
+            throw new ForbiddenOperationException(
+                    "Attempt to remove permanent role: " + role.getLabel()
+            );
+        }
+
         roleRepository.deleteById(id);
         log.info("Role with id = {} was removed: ", id);
     }
@@ -99,13 +109,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     private boolean isRolePermanent(final String roleLabel) {
-        for (final PermanentRoles permanentRoleLabel : PermanentRoles.values()) {
-            if (permanentRoleLabel.toString().equals(roleLabel)) {
 
-                return true;
-            }
-        }
-
-        return false;
+        return Arrays.stream(PermanentRoles.values())
+                .map(PermanentRoles::toString).anyMatch(roleLabel::equals);
     }
 }

@@ -2,6 +2,7 @@ package com.example.server.service;
 
 import com.example.server.dto.RoleDto;
 import com.example.server.model.Role;
+import com.example.server.security.exception.ForbiddenOperationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +16,7 @@ public interface RoleService {
 
     void addRole(RoleDto role);
 
-    void updateRole(RoleDto roleDto);
+    void updateRole(RoleDto roleDto) throws ForbiddenOperationException;
 
     void removeRole(Long id);
 
