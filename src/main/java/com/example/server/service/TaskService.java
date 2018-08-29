@@ -2,11 +2,11 @@ package com.example.server.service;
 
 import com.example.server.dto.TaskDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface TaskService {
-    int TASK_COUNT_PER_PAGE = 3;
 
     TaskDto getTaskById(Long id);
 
@@ -18,7 +18,6 @@ public interface TaskService {
 
     void removeTask(Long id);
 
-    Page<TaskDto> getPageOfTasks(int page,
-                                 String sortByColumn,
+    Page<TaskDto> getPageOfTasks(Pageable pageable,
                                  String filterPattern);
 }

@@ -1,13 +1,17 @@
 package com.example.server.service;
 
 import com.example.server.dto.RoleDto;
+import com.example.server.model.PermanentRoles;
 import com.example.server.model.Role;
 import com.example.server.repository.RoleRepository;
+import com.example.server.security.exception.PermanentRoleChangingException;
 import com.example.server.transformer.RoleTransformer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +65,9 @@ public class RoleServiceImpl implements RoleService {
     public void updateRole(final RoleDto roleDto) {
         final Role role = Optional.of(roleRepository.getOne(roleDto.getId()))
                 .orElseThrow(EntityNotFoundException::new);
+        if (isRolePermanent(role.getLabel())) {
+            //throw new PermanentRoleChangingException("TRY TO CHANGE PERMANENT ROLE.");
+        }
         role.setLabel(roleDto.getLabel());
         roleRepository.save(role);
         log.info("Role was updated: " + role);
@@ -81,17 +88,24 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Page<RoleDto> getPageOfRoles(final int page,
-                                        final String sortByColumn,
+    public Page<RoleDto> getPageOfRoles(final Pageable pageable,
                                         final String filterPattern) {
 
         return roleRepository.findByIdOrLabel(
                 stringParser.getLongFromPattern(filterPattern),
                 filterPattern.toLowerCase(),
-                new PageRequest(page,
-                        ROLE_COUNT_PER_PAGE,
-                        Sort.Direction.ASC,
-                        sortByColumn)
+                pageable
         ).map(roleTransformer::transform);
+    }
+
+    private boolean isRolePermanent(final String roleLabel) {
+        for (final PermanentRoles permanentRoleLabel : PermanentRoles.values()) {
+            if (permanentRoleLabel.toString().equals(roleLabel)) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

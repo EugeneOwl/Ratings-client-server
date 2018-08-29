@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -73,17 +74,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<TaskDto> getPageOfTasks(final int page,
-                                        final String sortByColumn,
+    public Page<TaskDto> getPageOfTasks(final Pageable pageable,
                                         final String filterPattern) {
 
         return taskRepository.findByIdOrLabel(
                 stringParser.getLongFromPattern(filterPattern),
                 filterPattern.toLowerCase(),
-                new PageRequest(page,
-                        TASK_COUNT_PER_PAGE,
-                        Sort.Direction.ASC,
-                        sortByColumn)
+                pageable
         ).map(taskTransformer::transform);
     }
 }

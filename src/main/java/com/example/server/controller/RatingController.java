@@ -4,12 +4,14 @@ import com.example.server.dto.RatingDto;
 import com.example.server.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 @RequestMapping(value = "server/ratings", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RatingController {
     @Autowired

@@ -1,7 +1,9 @@
 package com.example.server.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 class GlobalDefaultExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             final HttpServletRequest req,
             final MethodArgumentNotValidException e
@@ -27,7 +29,7 @@ class GlobalDefaultExceptionHandler {
         writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
         return new ResponseEntity<>(e.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage),
-                HttpStatus.NOT_ACCEPTABLE);
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -52,13 +54,46 @@ class GlobalDefaultExceptionHandler {
     }
 
     @ExceptionHandler(PropertyReferenceException.class)
-    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
-    public ResponseEntity<Object> handleEmptyResultDataAccess(
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handlePropertyReference(
             final HttpServletRequest req,
             final PropertyReferenceException e
     ) {
         writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    // When sorting by not existing field.
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleInvalidDataAccessApiUsage(
+            final HttpServletRequest req,
+            final InvalidDataAccessApiUsageException e
+    ) {
+        writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    // When getting page request with negative page number.
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleIllegalArgument(
+            final HttpServletRequest req,
+            final IllegalArgumentException e
+    ) {
+        writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    // When sorting by not existing field.
+    @ExceptionHandler(SQLGrammarException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleSQLGrammar(
+            final HttpServletRequest req,
+            final SQLGrammarException e
+    ) {
+        writeDefaultErrorLogMessage(req.getRequestURL(), e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     private void writeDefaultErrorLogMessage(final StringBuffer url, final String errorMessage) {

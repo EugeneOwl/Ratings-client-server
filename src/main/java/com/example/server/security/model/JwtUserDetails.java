@@ -1,6 +1,5 @@
 package com.example.server.security.model;
 
-import com.example.server.model.Role;
 import com.example.server.model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,9 +27,8 @@ public class JwtUserDetails implements UserDetails {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = new HashSet<>();
-        user.getRoles().stream().map(Role::getLabel)
-                .map(SimpleGrantedAuthority::new)
-                .map(authorities::add);
+        user.getRoles().stream()
+                .forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getLabel())));
     }
 
     @Override
