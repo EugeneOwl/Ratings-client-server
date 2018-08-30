@@ -1,7 +1,6 @@
 package com.example.server.controller;
 
 import com.example.server.dto.RoleDto;
-import com.example.server.security.exception.ForbiddenOperationException;
 import com.example.server.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
