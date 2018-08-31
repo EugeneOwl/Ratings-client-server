@@ -29,9 +29,9 @@ public interface RoleService {
     /**
      * Saves new role received from given role Dto.
      *
-     * @param role
+     * @param roleDto
      */
-    void addRole(RoleDto role);
+    void addRole(RoleDto roleDto);
 
     /**
      * Updates existing role received from given role Dto.
@@ -70,7 +70,8 @@ public interface RoleService {
      * Returns role Dto page by given page number, page size, sort field and filter pattern.
      *
      * @param pageable      must contain positive page number, positive page size and existing sort field.
-     * @param filterPattern is appropriate if it takes place at the beginning, middle or end of role label.
+     * @param filterPattern is appropriate if it takes place at the beginning, middle or end of role label
+     *                      or equals to role identifier.
      * @return role Dto page by given page number, page size, sort field and filter pattern.
      * @throws org.hibernate.exception.SQLGrammarException when sorting field does not exist.
      * @throws IllegalArgumentException when page number is negative.
