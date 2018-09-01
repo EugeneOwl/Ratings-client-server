@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="4" author="Eugene">
+
+        <insert tableName="tasks">
+            <column name="label" value="большое задание"/>
+            <column name="description" value="описание большго задания"/>
+            <column name="evaluation" value="11"/>
+            <column name="user_id" value="1"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="задание поменьше"/>
+            <column name="description" value="описание задания поменьше"/>
+            <column name="evaluation" value="5"/>
+            <column name="user_id" value="2"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="подзадание для большого"/>
+            <column name="description" value="описание подзадания для большого"/>
+            <column name="evaluation" value="7"/>
+            <column name="parent_id" value="1"/>
+            <column name="user_id" value="1"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="сложное"/>
+            <column name="description" value="описание сложного"/>
+            <column name="evaluation" value="15"/>
+            <column name="parent_id" value="3"/>
+            <column name="user_id" value="2"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="простое"/>
+            <column name="description" value="описание простого"/>
+            <column name="evaluation" value="2"/>
+            <column name="user_id" value="3"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="задание для умного"/>
+            <column name="description" value="описание задания для умного"/>
+            <column name="evaluation" value="15"/>
+            <column name="user_id" value="4"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="задание для глупого"/>
+            <column name="description" value="описание задания для глупого"/>
+            <column name="evaluation" value="8"/>
+            <column name="user_id" value="5"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="ещё небольшенькое"/>
+            <column name="description" value="описание ещё небольшенького"/>
+            <column name="evaluation" value="6"/>
+            <column name="user_id" value="5"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="задание для лебедя"/>
+            <column name="description" value="описание задания для лебедя"/>
+            <column name="evaluation" value="4"/>
+            <column name="user_id" value="7"/>
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="label" value="задачка простая"/>
+            <column name="description" value="описание задачки простой"/>
+            <column name="evaluation" value="11"/>
+            <column name="parent_id" value="7"/>
+            <column name="user_id" value="6"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

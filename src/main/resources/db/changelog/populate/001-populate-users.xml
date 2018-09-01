@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="Eugene">
+
+        <insert tableName="users">
+            <column name="username" value="Eugene"/>
+            <column name="mobile_number" value="375291111224"/>
+            <column name="password"
+                    value="6d0e7f10520f46cf2ef6bac81ab8ef7cbcbe2f69ea88dd3aaccbf200cc366351a1234ee2a757b329"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="Alex"/>
+            <column name="mobile_number" value="375336661234"/>
+            <column name="password"
+                    value="56b588f0ef367924991d646aa400826a4c0c61494aef6a97f928a3c8daef864f08f7a71668887d9f"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="Victore"/>
+            <column name="mobile_number" value="375177788992"/>
+            <column name="password"
+                    value="91182974a7418c287991f0c284db39eb0f787a4c30d7fb96d17f88238150301470e06f2fbba1dda6"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="test_user1"/>
+            <column name="mobile_number" value="375291234567"/>
+            <column name="password" value="pwd"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="test_user2"/>
+            <column name="mobile_number" value="375291234567"/>
+            <column name="password" value="pwd"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="test_user3"/>
+            <column name="mobile_number" value="375291234567"/>
+            <column name="password" value="pwd"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="test_user4"/>
+            <column name="mobile_number" value="375291234567"/>
+            <column name="password" value="pwd"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

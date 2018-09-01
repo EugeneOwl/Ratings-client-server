@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="5" author="Eugene">
+        
+        <insert tableName="ratings">
+            <column name="label" value="hello"/>
+            <column name="mark" value="2"/>
+            <column name="recipient_id" value="2"/>
+            <column name="sender_id" value="1"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="whats up!?"/>
+            <column name="mark" value="3"/>
+            <column name="recipient_id" value="2"/>
+            <column name="sender_id" value="1"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="hey?"/>
+            <column name="mark" value="5"/>
+            <column name="recipient_id" value="2"/>
+            <column name="sender_id" value="1"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="yes?"/>
+            <column name="mark" value="4"/>
+            <column name="recipient_id" value="1"/>
+            <column name="sender_id" value="2"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="no!"/>
+            <column name="mark" value="1"/>
+            <column name="recipient_id" value="3"/>
+            <column name="sender_id" value="2"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="I am here!"/>
+            <column name="mark" value="2"/>
+            <column name="recipient_id" value="1"/>
+            <column name="sender_id" value="3"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="I am too!"/>
+            <column name="mark" value="1"/>
+            <column name="recipient_id" value="3"/>
+            <column name="sender_id" value="2"/>
+        </insert>
+
+        <insert tableName="ratings">
+            <column name="label" value="I am not ready yet!!"/>
+            <column name="mark" value="5"/>
+            <column name="recipient_id" value="3"/>
+            <column name="sender_id" value="2"/>
+        </insert>
+            
+    </changeSet>
+    
+</databaseChangeLog>
