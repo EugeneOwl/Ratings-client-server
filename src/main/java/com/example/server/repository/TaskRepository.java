@@ -13,4 +13,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(nativeQuery = true,
             value = "SELECT * FROM tasks WHERE id = ?1 OR LOWER(label) LIKE %?2%")
     Page<Task> findByIdOrLabel(Long Id, String label, Pageable pageRequest);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM tasks WHERE (id = ?1 OR LOWER(label) LIKE %?2%) AND user_id = ?3")
+    Page<Task> findByIdOrLabelAndUserId(Long Id, String label, Long userId, Pageable pageRequest);
 }

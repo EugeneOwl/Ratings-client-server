@@ -81,4 +81,16 @@ public class TaskServiceImpl implements TaskService {
                 pageable
         ).map(taskTransformer::transform);
     }
+
+    @Override
+    public Page<TaskDto> getPageOfTasksByUserId(final Pageable pageable,
+                                                final String filterPattern,
+                                                final Long userId) {
+        return taskRepository.findByIdOrLabelAndUserId(
+                stringParser.getLongFromPattern(filterPattern),
+                filterPattern.toLowerCase(),
+                userId,
+                pageable
+        ).map(taskTransformer::transform);
+    }
 }

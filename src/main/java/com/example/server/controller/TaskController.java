@@ -40,6 +40,16 @@ public class TaskController {
         return taskService.getPageOfTasks(pageable, filterPattern);
     }
 
+    @GetMapping("/page/by/user")
+    public Page<TaskDto> getPageOfTasksByUser(
+            final Pageable pageable,
+            @RequestParam(value = "filterPattern", defaultValue = "") final String filterPattern,
+            @RequestParam(value = "userId", defaultValue = "0") final Long userId
+    ) {
+
+        return taskService.getPageOfTasksByUserId(pageable, filterPattern, userId);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public TaskDto addTask(@Valid @RequestBody final TaskDto taskDto) {

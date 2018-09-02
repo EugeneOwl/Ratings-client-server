@@ -31,7 +31,7 @@ public interface TaskService {
      *
      * @param taskDto must have existing task identifier.
      * @throws javax.persistence.EntityNotFoundException if no task exists for given task Dto
-     * or no user exists for task Dto user id.
+     *                                                   or no user exists for task Dto user id.
      */
     void updateTask(TaskDto taskDto);
 
@@ -58,8 +58,23 @@ public interface TaskService {
      *                      of equals to task identifier.
      * @return task Dto page by given page number, page size, sort field and filter pattern.
      * @throws org.hibernate.exception.SQLGrammarException when sorting field does not exist.
-     * @throws IllegalArgumentException when page number is negative.
+     * @throws IllegalArgumentException                    when page number is negative.
      */
     Page<TaskDto> getPageOfTasks(Pageable pageable,
                                  String filterPattern);
+
+    /**
+     * Returns task Dto page by given page number, page size, sort field and filter pattern and user id.
+     *
+     * @param pageable      must contain positive page number, positive page size and existing sort field.
+     * @param filterPattern is appropriate if it takes place at the beginning, middle or end of task label
+     *                      of equals to task identifier.
+     * @param userId must belong to existing user.
+     * @return task Dto page by given page number, page size, sort field and filter pattern.
+     * @throws org.hibernate.exception.SQLGrammarException when sorting field does not exist.
+     * @throws IllegalArgumentException                    when page number is negative.
+     */
+    Page<TaskDto> getPageOfTasksByUserId(Pageable pageable,
+                                         String filterPattern,
+                                         Long userId);
 }
