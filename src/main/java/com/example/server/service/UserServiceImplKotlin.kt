@@ -1,11 +1,11 @@
 package com.example.server.service
 
-import com.example.server.service.functions.getLongFromString;
+import com.example.server.consts.MobileNumberConsts.Companion.NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN
 import com.example.server.dto.UserDto
 import com.example.server.dto.UserUpdateDtoKotlin
 import com.example.server.model.User
 import com.example.server.repository.UserRepository
-import com.example.server.consts.MobileNumberConsts.Companion.NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN
+import com.example.server.service.functions.getLongFromString
 import com.example.server.transformer.UserTransformer
 import com.example.server.transformer.UserUpdateTransformerKotlin
 import org.slf4j.Logger

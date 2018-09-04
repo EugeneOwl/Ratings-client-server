@@ -1,9 +1,9 @@
 package com.example.server.service;
 
-import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.dto.TaskDto;
 import com.example.server.model.Task;
 import com.example.server.repository.TaskRepository;
+import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.transformer.TaskTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package com.example.server.service;
 
-import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.dto.UserDto;
 import com.example.server.dto.UserUpdateDto;
 import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
+import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.transformer.UserTransformer;
 import com.example.server.transformer.UserUpdateTransformer;
 import lombok.extern.slf4j.Slf4j;
