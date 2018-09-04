@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+//@RestController
 @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 @RequestMapping(value = "server/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {

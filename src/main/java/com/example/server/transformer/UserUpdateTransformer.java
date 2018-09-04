@@ -20,10 +20,9 @@ public class UserUpdateTransformer implements UpdateTransformer<User, UserUpdate
 
     @Override
     public User transform(final UserUpdateDto userUpdateDto) {
-        final User user = User.builder()
-                .roles(new HashSet<>(roleService.getRoleListByIds(userUpdateDto.getRoleIds())))
-                .mobileNumber(userService.cleanUpMobileNumber(userUpdateDto.getMobileNumber()))
-                .build();
+        final User user = new User();
+        user.setRoles(new HashSet<>(roleService.getRoleListByIds(userUpdateDto.getRoleIds())));
+        user.setMobileNumber(userService.cleanUpMobileNumber(userUpdateDto.getMobileNumber()));
         user.setId(userUpdateDto.getId());
 
         return user;

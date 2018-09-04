@@ -1,5 +1,6 @@
 package com.example.server.service;
 
+import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.dto.UserDto;
 import com.example.server.dto.UserUpdateDto;
 import com.example.server.model.User;
@@ -13,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -31,13 +30,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserUpdateTransformer userUpdateTransformer;
 
-    @Autowired
-    private StringParser stringParser;
-
     @Override
     public UserDto getUserById(final Long id) {
-        final User user = Optional.of(userRepository.getOne(id))
-                .orElseThrow(EntityNotFoundException::new);
+        final User user = userRepository.getOne(id);
         log.info("User was taken by id: " + user);
 
         return userTransformer.transform(user);
@@ -45,8 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(final UserUpdateDto userUpdateDto) {
-        final User user = Optional.of(userRepository.getOne(userUpdateDto.getId()))
-                .orElseThrow(EntityNotFoundException::new);
+        final User user = userRepository.getOne(userUpdateDto.getId());
         user.update(userUpdateTransformer.transform(userUpdateDto));
 
         userRepository.save(user);
@@ -73,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public Page<UserDto> getPageOfUsers(final Pageable pageable, final String filterPattern) {
         
         return userRepository.findByIdOrUsername(
-                stringParser.getLongFromPattern(filterPattern),
+                GetLongFromStringKt.getLongFromString(filterPattern),
                 filterPattern.toLowerCase(),
                 pageable
         ).map(userTransformer::transform);

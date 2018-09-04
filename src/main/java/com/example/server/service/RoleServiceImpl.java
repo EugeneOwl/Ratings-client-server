@@ -1,5 +1,6 @@
 package com.example.server.service;
 
+import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.dto.RoleDto;
 import com.example.server.model.PermanentRoles;
 import com.example.server.model.Role;
@@ -13,11 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -31,13 +30,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleTransformer roleTransformer;
 
-    @Autowired
-    private StringParser stringParser;
-
     @Override
     public RoleDto getRoleById(final Long id) {
-        final Role role = Optional.of(roleRepository.getOne(id))
-                .orElseThrow(EntityNotFoundException::new);
+        final Role role = roleRepository.getOne(id);
         log.info("Role was taken by id: " + role);
 
         return roleTransformer.transform(role);
@@ -62,8 +57,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void updateRole(final RoleDto roleDto) {
-        final Role role = Optional.of(roleRepository.getOne(roleDto.getId()))
-                .orElseThrow(EntityNotFoundException::new);
+        final Role role = roleRepository.getOne(roleDto.getId());
         if (isRolePermanent(role.getLabel())) {
             throw new ForbiddenOperationException(
                     "Attempt to change permanent role: " + role.getLabel()
@@ -77,8 +71,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void removeRole(final Long id) {
-        final Role role = Optional.of(roleRepository.getOne(id))
-                .orElseThrow(EntityNotFoundException::new);
+        final Role role = roleRepository.getOne(id);
         if (isRolePermanent(role.getLabel())) {
             throw new ForbiddenOperationException(
                     "Attempt to remove permanent role: " + role.getLabel()
@@ -102,7 +95,7 @@ public class RoleServiceImpl implements RoleService {
                                         final String filterPattern) {
 
         return roleRepository.findByIdOrLabel(
-                stringParser.getLongFromPattern(filterPattern),
+                GetLongFromStringKt.getLongFromString(filterPattern),
                 filterPattern.toLowerCase(),
                 pageable
         ).map(roleTransformer::transform);

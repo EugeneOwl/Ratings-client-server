@@ -6,9 +6,6 @@ import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
-
 @Component
 public class RatingTransformer implements Transformer<Rating, RatingDto> {
     @Autowired
@@ -23,12 +20,10 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
                 .label(rating.getLabel())
                 .mark(rating.getMark())
                 .sender(userTransformer.transform(
-                        Optional.of(userRepository.getOne(rating.getSender().getId()))
-                                .orElseThrow(EntityNotFoundException::new)
-                ))
+                        userRepository.getOne(rating.getSender().getId()))
+                )
                 .recipient(userTransformer.transform(
-                        Optional.of(userRepository.getOne(rating.getRecipient().getId()))
-                                .orElseThrow(EntityNotFoundException::new))
+                        userRepository.getOne(rating.getRecipient().getId()))
                 )
                 .build();
         ratingDto.setId(rating.getId());
@@ -41,10 +36,8 @@ public class RatingTransformer implements Transformer<Rating, RatingDto> {
         final Rating rating = Rating.builder()
                 .label(ratingDto.getLabel())
                 .mark(ratingDto.getMark())
-                .recipient(Optional.of(userRepository.getOne(ratingDto.getRecipient().getId()))
-                        .orElseThrow(EntityNotFoundException::new))
-                .sender(Optional.of(userRepository.getOne(ratingDto.getSender().getId()))
-                        .orElseThrow(EntityNotFoundException::new))
+                .recipient(userRepository.getOne(ratingDto.getRecipient().getId()))
+                .sender(userRepository.getOne(ratingDto.getSender().getId()))
                 .build();
         rating.setId(ratingDto.getId());
 

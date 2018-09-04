@@ -7,9 +7,7 @@ import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class TaskTransformer implements Transformer<Task, TaskDto> {
@@ -26,13 +24,11 @@ public class TaskTransformer implements Transformer<Task, TaskDto> {
                 .label(taskDto.getLabel())
                 .description(taskDto.getDescription())
                 .evaluation(taskDto.getEvaluation())
-                .user(Optional.of(userRepository.getOne(taskDto.getUser().getId()))
-                .orElseThrow(EntityNotFoundException::new))
+                .user(userRepository.getOne(taskDto.getUser().getId()))
                 .build();
         task.setId(taskDto.getId());
         if (Objects.nonNull(taskDto.getParent())) {
-            task.setParent(Optional.of(taskRepository.getOne(taskDto.getParent().getId()))
-                    .orElseThrow(EntityNotFoundException::new));
+            task.setParent(taskRepository.getOne(taskDto.getParent().getId()));
         }
 
         return task;

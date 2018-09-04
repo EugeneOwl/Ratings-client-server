@@ -22,15 +22,14 @@ public class UserTransformer implements Transformer<User, UserDto> {
 
     @Override
     public User transform(final UserDto userDto) {
-        final User user = User.builder()
-                .username(userDto.getUsername())
-                .mobileNumber(userService.cleanUpMobileNumber(userDto.getMobileNumber()))
-                .roles(userDto.getRoles().stream().map(roleTransformer::transform)
-                        .collect(Collectors.toSet()))
-                .tasks(userDto.getTasks().stream()
-                        .map(taskTransformer::transform)
-                        .collect(Collectors.toList()))
-                .build();
+        final User user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setMobileNumber(userService.cleanUpMobileNumber(userDto.getMobileNumber()));
+        user.setRoles(userDto.getRoles().stream().map(roleTransformer::transform)
+                .collect(Collectors.toSet()));
+        user.setTasks(userDto.getTasks().stream()
+                .map(taskTransformer::transform)
+                .collect(Collectors.toList()));
         user.setId(userDto.getId());
 
         return user;

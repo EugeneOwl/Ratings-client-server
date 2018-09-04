@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,8 +22,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public RatingDto getRatingById(final Long id) {
-        final Rating rating = Optional.of(ratingRepository.getOne(id))
-                .orElseThrow(EntityNotFoundException::new);
+        final Rating rating = ratingRepository.getOne(id);
         log.info("Rating was taken by id: {}", rating);
 
         return ratingTransformer.transform(rating);

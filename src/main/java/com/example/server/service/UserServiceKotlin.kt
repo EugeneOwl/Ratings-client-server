@@ -1,16 +1,11 @@
-package com.example.server.service;
+package com.example.server.service
 
-import com.example.server.dto.UserDto;
-import com.example.server.dto.UserUpdateDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.server.dto.UserDto
+import com.example.server.dto.UserUpdateDtoKotlin
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
-import java.util.List;
-
-public interface UserService {
-    String MOBILE_NUMBER_PATTERN = "^((375)([0-9]{9}))$";
-    String NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN = "[^0-9]";
-
+interface UserServiceKotlin {
     /**
      * Returns user Dto of user with the given identifier.
      *
@@ -18,7 +13,7 @@ public interface UserService {
      * @return user Dto of user with the given identifier.
      * @throws javax.persistence.EntityNotFoundException if no user exists for given id.
      */
-    UserDto getUserById(final Long id);
+    fun getUserById(id: Long): UserDto
 
     /**
      * Updates existing user received from given userUpdate Dto.
@@ -28,25 +23,25 @@ public interface UserService {
      * @throws javax.persistence.EntityNotFoundException if no user exists for given user Dto.
      * @throws javax.persistence.EntityNotFoundException if any user does not exist
      *                                                   from identifiers list of given userUpdate Dto.
-     * @see UserService#cleanUpMobileNumber
+     * @see UserServiceKotlin.cleanUpMobileNumber
      */
-    void updateUser(final UserUpdateDto userUpdateDto);
+    fun updateUser(userUpdateDtoKotlin: UserUpdateDtoKotlin)
 
     /**
      * Returns user Dto list of all users from database sorted by identifier.
      *
      * @return user Dto list of all users from database sorted by identifier.
      */
-    List<UserDto> getAllUsers();
+    fun getAllUsers(): List<UserDto>
 
     /**
      * Returns mobile number without any not valid literals.
      *
      * @param mobileNumber for user
      * @return mobile number without any not valid literals.
-     * @see UserService#NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN
+     * @see MobileNumberConsts.NOT_VALID_MOBILE_NUMBER_SYMBOL_PATTERN
      */
-    String cleanUpMobileNumber(final String mobileNumber);
+    fun cleanUpMobileNumber(mobileNumber: String): String
 
     /**
      * Returns user Dto page by given page number, page size, sort field and filter pattern.
@@ -58,5 +53,5 @@ public interface UserService {
      * @throws org.hibernate.exception.SQLGrammarException when sorting field does not exist.
      * @throws IllegalArgumentException                    when page number is negative.
      */
-    Page<UserDto> getPageOfUsers(Pageable pageable, String filterPattern);
+    fun getPageOfUsers(pageable: Pageable, filterPattern: String): Page<UserDto>
 }

@@ -1,5 +1,6 @@
 package com.example.server.service;
 
+import com.example.server.service.functions.GetLongFromStringKt;
 import com.example.server.dto.TaskDto;
 import com.example.server.model.Task;
 import com.example.server.repository.TaskRepository;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,13 +24,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskTransformer taskTransformer;
 
-    @Autowired
-    private StringParser stringParser;
-
     @Override
     public TaskDto getTaskById(final Long id) {
-        final Task task = Optional.of(taskRepository.getOne(id))
-                .orElseThrow(EntityExistsException::new);
+        final Task task = taskRepository.getOne(id);
         log.info("Task was taken by id: {}", task);
 
         return taskTransformer.transform(task);
@@ -47,8 +41,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void updateTask(final TaskDto taskDto) {
-        final Task task = Optional.of(taskRepository.getOne(taskDto.getId()))
-                .orElseThrow(EntityNotFoundException::new);
+        final Task task = taskRepository.getOne(taskDto.getId());
         task.update(taskTransformer.transform(taskDto));
 
         taskRepository.save(task);
@@ -76,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
                                         final String filterPattern) {
 
         return taskRepository.findByIdOrLabel(
-                stringParser.getLongFromPattern(filterPattern),
+                GetLongFromStringKt.getLongFromString(filterPattern),
                 filterPattern.toLowerCase(),
                 pageable
         ).map(taskTransformer::transform);
@@ -87,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
                                                 final String filterPattern,
                                                 final Long userId) {
         return taskRepository.findByIdOrLabelAndUserId(
-                stringParser.getLongFromPattern(filterPattern),
+                GetLongFromStringKt.getLongFromString(filterPattern),
                 filterPattern.toLowerCase(),
                 userId,
                 pageable
